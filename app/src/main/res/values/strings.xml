@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">1396458_HabitTracker</string>
+    <string name="habit_list_activity_title">My Habits</string>
     <string name="action_settings">Settings</string>
 </resources>

@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.habitlist;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import ca.antonious.habittracker.R;
+
+public class HabitListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
