@@ -46,6 +46,12 @@ public class HabitRepository implements IObservable<List<Habit>> {
         notifyChange();
     }
 
+    public void removeHabit(String id) {
+        // get habits to make sure state is good
+        habitService.removeHabit(id);
+        notifyChange();
+    }
+
     private void notifyChange() {
         for (IObserver<List<Habit>> observer: observers) {
             observer.onNext(getHabits());

@@ -11,4 +11,5 @@ public interface IHabitService {
     List<Habit> getHabits();
     void addHabit(Habit habit);
     void updateHabit(Habit habit);
+    void removeHabit(String id);
 }

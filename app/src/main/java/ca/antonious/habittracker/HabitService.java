@@ -43,6 +43,11 @@ public class HabitService implements IHabitService {
 
     }
 
+    @Override
+    public void removeHabit(String id) {
+
+    }
+
     private void saveHabits(List<? extends Habit> habits) {
         String serializedHabits = new Gson().toJson(habits);
         fileHandler.saveStringToFile(Constants.HABIT_LIST_FILE_NAME, serializedHabits);
