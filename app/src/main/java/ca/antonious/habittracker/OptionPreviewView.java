@@ -29,7 +29,7 @@ public class OptionPreviewView extends LinearLayout {
 
         inflateLayout(context);
         bindViews();
-        handleAttributes(context, attrs);
+        parseAttributes(context, attrs);
     }
 
     private void inflateLayout(Context context) {
@@ -41,20 +41,44 @@ public class OptionPreviewView extends LinearLayout {
         previewTextView = (TextView) findViewById(R.id.option_preview);
     }
 
-    private void handleAttributes(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.OptionsPreviewView);
+    private void parseAttributes(Context context, AttributeSet attrs) {
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.OptionsPreviewView);
 
-        String labelAttributeText = a.getString(R.styleable.OptionsPreviewView_labelText);
-        String previewAttributeText = a.getString(R.styleable.OptionsPreviewView_previewText);
+        parseLabelTextAttribute(typedArray);
+        parsePreviewTextAttribute(typedArray);
+
+        typedArray.recycle();
+    }
+
+    private void parseLabelTextAttribute(TypedArray typedArray) {
+        String labelAttributeText = typedArray.getString(R.styleable.OptionsPreviewView_labelText);
 
         if (!StringUtils.isStringNullOrEmpty(labelAttributeText)) {
             labelTextView.setText(labelAttributeText);
         }
+    }
 
-        if(!StringUtils.isStringNullOrEmpty(previewAttributeText)) {
+    private void parsePreviewTextAttribute(TypedArray typedArray) {
+        String previewAttributeText = typedArray.getString(R.styleable.OptionsPreviewView_previewText);
+
+        if (!StringUtils.isStringNullOrEmpty(previewAttributeText)) {
             previewTextView.setText(previewAttributeText);
         }
+    }
 
-        a.recycle();
+    public String getLabelText() {
+        return labelTextView.getText().toString();
+    }
+
+    public void setLabelText(String text) {
+        labelTextView.setText(text);
+    }
+
+    public String getPreviewText() {
+        return previewTextView.getText().toString();
+    }
+
+    public void setPreviewText(String text) {
+        previewTextView.setText(text);
     }
 }
