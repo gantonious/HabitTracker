@@ -13,7 +13,7 @@ import android.view.View;
 
 import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.FileHandler;
-import ca.antonious.habittracker.HabbitService;
+import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.HabitAdapter;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
@@ -64,7 +64,7 @@ public class HabitListActivity extends AppCompatActivity {
 
     private void loadHabits() {
         FileHandler fileHandler = new AndroidFileHandler(this);
-        IHabitService habitService = new HabbitService(fileHandler);
+        IHabitService habitService = new HabitService(fileHandler);
 
         habitAdapter.setHabits(habitService.getHabits());
         habitAdapter.notifyDataSetChanged();

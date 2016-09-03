@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.FileHandler;
-import ca.antonious.habittracker.HabbitService;
+import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
@@ -40,7 +39,7 @@ public class AddHabitActivity extends AppCompatActivity {
         habit.setName(habitTitle.getText().toString());
 
         FileHandler fileHandler = new AndroidFileHandler(this);
-        IHabitService habitService = new HabbitService(fileHandler);
+        IHabitService habitService = new HabitService(fileHandler);
 
         habitService.addHabit(habit);
     }

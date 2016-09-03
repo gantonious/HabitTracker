@@ -12,10 +12,10 @@ import ca.antonious.habittracker.models.Habit;
 /**
  * Created by George on 2016-09-01.
  */
-public class HabbitService implements IHabitService {
+public class HabitService implements IHabitService {
     private FileHandler fileHandler;
 
-    public HabbitService(FileHandler fileHandler) {
+    public HabitService(FileHandler fileHandler) {
         this.fileHandler = fileHandler;
     }
 
