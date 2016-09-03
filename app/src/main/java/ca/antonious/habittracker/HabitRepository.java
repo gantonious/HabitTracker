@@ -34,6 +34,12 @@ public class HabitRepository implements IObservable<List<Habit>> {
         return new ArrayList<>(habits.values());
     }
 
+    public Habit getHabit(String id) {
+        getHabits();
+
+        return habits.get(id);
+    }
+
     public void addHabit(Habit habit) {
         getHabits();
 
