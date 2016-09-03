@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".addhabit.AddHabitActivity"
+            android:label="@string/add_habit_acitivity_title"/>
     </application>
 
 </manifest>
