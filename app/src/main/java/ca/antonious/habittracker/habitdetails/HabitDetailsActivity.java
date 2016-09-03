@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import ca.antonious.habittracker.BaseActivity;
+import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
@@ -25,6 +26,8 @@ public class HabitDetailsActivity extends BaseActivity {
 
     private HabitRepository habitRepository;
 
+    private Habit habit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +42,10 @@ public class HabitDetailsActivity extends BaseActivity {
 
         setUpRecyclerView();
 
-        // actually use id
-        displayHabit(habitRepository.getHabits().get(0));
+        String id = getIntent().getStringExtra(Constants.EXTRA_HABIT_ID);
+        habit = habitRepository.getHabit(id);
+
+        displayHabit(habit);
     }
 
     private void setUpRecyclerView() {
@@ -94,7 +99,7 @@ public class HabitDetailsActivity extends BaseActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        habitRepository.removeHabit(habitRepository.getHabits().get(0).getId());
+                        habitRepository.removeHabit(habit.getId());
                         finish();
                     }
                 })

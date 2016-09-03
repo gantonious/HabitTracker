@@ -14,6 +14,7 @@ import java.util.List;
 
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
+import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
@@ -64,7 +65,10 @@ public class HabitListActivity extends BaseActivity {
         habitAdapter.setItemClickedListener(new ArrayAdapter.ItemClickedListener<Habit>() {
             @Override
             public void onItemClicked(Habit item, int position) {
-                return;
+                Intent intent = new Intent(HabitListActivity.this, HabitDetailsActivity.class);
+                intent.putExtra(Constants.EXTRA_HABIT_ID, item.getId());
+
+                startActivity(intent);
             }
         });
 
@@ -76,23 +80,5 @@ public class HabitListActivity extends BaseActivity {
                 habitAdapter.notifyDataSetChanged();
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, HabitDetailsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
