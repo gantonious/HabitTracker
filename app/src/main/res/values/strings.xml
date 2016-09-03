@@ -2,7 +2,7 @@
     <string name="app_name">1396458_HabitTracker</string>
 
     <string name="habit_list_activity_title">My Habits</string>
-    <string name="add_habit_acitivity_title">Create Habit</string>
+    <string name="add_habit_activity_title">Create Habit</string>
     <string name="habit_details_activity_title">Habit Details</string>
 
     <string name="action_settings">Settings</string>
