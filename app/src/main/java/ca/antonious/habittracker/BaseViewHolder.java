@@ -7,21 +7,15 @@ import android.view.View;
  * Created by George on 2016-09-03.
  */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
-    private View.OnClickListener onClickListener;
-
     public BaseViewHolder(View view) {
         super(view);
     }
 
     protected void onDetach() {
-        onClickListener = null;
-    }
-
-    public View.OnClickListener getOnClickListener() {
-        return onClickListener;
+        itemView.setOnClickListener(null);
     }
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+        itemView.setOnClickListener(onClickListener);
     }
 }

@@ -27,8 +27,9 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(HabitAdapter.ViewHolder holder, int position) {
-        Habit habit = get(position);
+        super.onBindViewHolder(holder, position);
 
+        Habit habit = get(position);
         holder.setTitle(habit.getName());
     }
 
@@ -42,15 +43,7 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
         public ViewHolder(View view) {
             super(view);
-
             title = (TextView) view.findViewById(R.id.habit_title);
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
 
         public void setTitle(String title) {

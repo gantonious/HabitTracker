@@ -12,6 +12,7 @@ import android.view.View;
 
 import java.util.List;
 
+import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.R;
@@ -57,6 +58,13 @@ public class HabitListActivity extends BaseActivity {
                 } else if (dy < 0) {
                     fab.show();
                 }
+            }
+        });
+
+        habitAdapter.setItemClickedListener(new ArrayAdapter.ItemClickedListener<Habit>() {
+            @Override
+            public void onItemClicked(Habit item, int position) {
+                return;
             }
         });
 

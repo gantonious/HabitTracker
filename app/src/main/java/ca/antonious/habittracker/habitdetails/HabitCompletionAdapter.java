@@ -25,6 +25,8 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+
         HabitCompletion habitCompletion = get(position);
 
         holder.setCompletionDateText(habitCompletion.getCompletionTime().toString());
