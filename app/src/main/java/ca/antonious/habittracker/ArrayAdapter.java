@@ -36,4 +36,9 @@ public abstract class ArrayAdapter<T, VH extends RecyclerView.ViewHolder> extend
     public void addAll(Collection<? extends T> collection) {
         items.addAll(collection);
     }
+
+    public void setAll(Collection<? extends T> collection) {
+        items.clear();
+        items.addAll(collection);
+    }
 }
