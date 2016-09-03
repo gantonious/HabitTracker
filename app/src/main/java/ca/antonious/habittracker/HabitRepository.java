@@ -1,8 +1,10 @@
 package ca.antonious.habittracker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ca.antonious.habittracker.models.Habit;
@@ -14,41 +16,45 @@ import ca.antonious.habittracker.observable.IObserver;
  */
 public class HabitRepository implements IObservable<List<Habit>> {
     private IHabitService habitService;
-    private List<Habit> habits;
+    private Map<String, Habit> habits;
 
     private Set<IObserver<List<Habit>>> observers = new HashSet<>();
 
     public HabitRepository(IHabitService habitService) {
         this.habitService = habitService;
-        this.habits = new ArrayList<>();
+        this.habits = new HashMap<>();
     }
 
     public List<Habit> getHabits() {
         if (habits.isEmpty()) {
-            habits.addAll(habitService.getHabits());
+            for (Habit habit: habitService.getHabits()) {
+                habits.put(habit.getId(), habit);
+            }
         }
-        return habits;
+        return new ArrayList<>(habits.values());
     }
 
     public void addHabit(Habit habit) {
-        // get habits to make sure state is good
         getHabits();
 
         habitService.addHabit(habit);
-        habits.add(habit);
+        habits.put(habit.getId(), habit);
         notifyChange();
     }
 
     public void updateHabit(Habit habit) {
-        // get habits to make sure state is good
+        getHabits();
 
         habitService.updateHabit(habit);
+        habits.put(habit.getId(), habit);
         notifyChange();
     }
 
     public void removeHabit(String id) {
-        // get habits to make sure state is good
+        getHabits();
+
         habitService.removeHabit(id);
+        habits.remove(id);
         notifyChange();
     }
 
