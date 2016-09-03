@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ca.antonious.habittracker.Utils.StringUtils;
 import ca.antonious.habittracker.models.Habit;
@@ -21,35 +23,45 @@ public class HabitService implements IHabitService {
 
     @Override
     public List<Habit> getHabits() {
-        String serializedHabits = fileHandler.loadFileAsString(Constants.HABIT_LIST_FILE_NAME);
-
-        if (StringUtils.isStringNullOrEmpty(serializedHabits)) {
-            return new ArrayList<>();
-        } else {
-            return new Gson().fromJson(serializedHabits, new TypeToken<List<Habit>>() {}.getType());
-        }
+        return new ArrayList<>(loadHabits().values());
     }
 
     @Override
     public void addHabit(Habit habit) {
-        List<Habit> habits = getHabits();
-        habits.add(habit);
+        Map<String, Habit> habits = loadHabits();
+        habits.put(habit.getId(), habit);
 
         saveHabits(habits);
     }
 
     @Override
-    public void updateHabit(Habit habitToUpdate) {
+    public void updateHabit(Habit habit) {
+        Map<String, Habit> habits = loadHabits();
+        habits.put(habit.getId(), habit);
 
+        saveHabits(habits);
     }
 
     @Override
     public void removeHabit(String id) {
+        Map<String, Habit> habits = loadHabits();
+        habits.remove(id);
 
+        saveHabits(habits);
     }
 
-    private void saveHabits(List<? extends Habit> habits) {
-        String serializedHabits = new Gson().toJson(habits);
-        fileHandler.saveStringToFile(Constants.HABIT_LIST_FILE_NAME, serializedHabits);
+    private Map<String, Habit> loadHabits() {
+        String serializedHabits = fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME);
+
+        if (StringUtils.isStringNullOrEmpty(serializedHabits)) {
+            return new HashMap<>();
+        } else {
+            return new Gson().fromJson(serializedHabits, new TypeToken<Map<String, Habit>>() {}.getType());
+        }
+    }
+
+    private void saveHabits(Map<String, Habit> habitMap) {
+        String serializedHabits = new Gson().toJson(habitMap);
+        fileHandler.saveStringToFile(Constants.HABIT_MAP_FILE_NAME, serializedHabits);
     }
 }
