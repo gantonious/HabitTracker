@@ -12,18 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 
 import ca.antonious.habittracker.AndroidFileHandler;
+import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.FileHandler;
+import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.HabitAdapter;
+import ca.antonious.habittracker.HabitTrackerApplication;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
 
-public class HabitListActivity extends AppCompatActivity {
+public class HabitListActivity extends BaseActivity {
     private RecyclerView habitRecyclerView;
     private HabitAdapter habitAdapter = new HabitAdapter();
 
     private FloatingActionButton fab;
+
+    private HabitRepository habitRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

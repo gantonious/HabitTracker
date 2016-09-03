@@ -7,13 +7,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ca.antonious.habittracker.AndroidFileHandler;
+import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.FileHandler;
 import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
-public class AddHabitActivity extends AppCompatActivity {
+public class AddHabitActivity extends BaseActivity {
     private Button addButton;
     private EditText habitTitle;
 

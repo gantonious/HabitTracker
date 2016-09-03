@@ -10,7 +10,7 @@ public class HabitTrackerApplication extends Application {
 
     public HabitRepository getHabitRepository() {
         ensureHabitRepository();
-        return habitRepository;s
+        return habitRepository;
     }
 
     private void ensureHabitRepository() {
