@@ -16,6 +16,7 @@ import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
+import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.observable.IObserver;
 
@@ -80,6 +81,7 @@ public class HabitListActivity extends BaseActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, HabitDetailsActivity.class));
             return true;
         }
 
