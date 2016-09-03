@@ -69,7 +69,8 @@ public class HabitListActivity extends BaseActivity {
         habitRepository.addObserver(new IObserver<List<Habit>>() {
             @Override
             public void onNext(List<Habit> next) {
-                habitAdapter.setHabits(next);
+                habitAdapter.clear();
+                habitAdapter.addAll(next);
                 habitAdapter.notifyDataSetChanged();
             }
         });
