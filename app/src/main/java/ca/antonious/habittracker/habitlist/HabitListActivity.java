@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.List;
+
 import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.FileHandler;
@@ -21,6 +23,8 @@ import ca.antonious.habittracker.HabitTrackerApplication;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
+import ca.antonious.habittracker.models.Habit;
+import ca.antonious.habittracker.observable.IObserver;
 
 public class HabitListActivity extends BaseActivity {
     private RecyclerView habitRecyclerView;
@@ -36,6 +40,8 @@ public class HabitListActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        habitRepository = getHabitTrackerApplication().getHabitRepository();
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,20 +65,14 @@ public class HabitListActivity extends BaseActivity {
                 }
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadHabits();
-    }
-
-    private void loadHabits() {
-        FileHandler fileHandler = new AndroidFileHandler(this);
-        IHabitService habitService = new HabitService(fileHandler);
-
-        habitAdapter.setHabits(habitService.getHabits());
-        habitAdapter.notifyDataSetChanged();
+        habitRepository.addObserver(new IObserver<List<Habit>>() {
+            @Override
+            public void onNext(List<Habit> next) {
+                habitAdapter.setHabits(next);
+                habitAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

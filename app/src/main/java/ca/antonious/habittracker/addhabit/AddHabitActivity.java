@@ -9,6 +9,7 @@ import android.widget.EditText;
 import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.FileHandler;
+import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
@@ -18,10 +19,14 @@ public class AddHabitActivity extends BaseActivity {
     private Button addButton;
     private EditText habitTitle;
 
+    private HabitRepository habitRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_habit);
+
+        habitRepository = getHabitTrackerApplication().getHabitRepository();
 
         addButton = (Button) findViewById(R.id.add_habit);
         habitTitle = (EditText) findViewById(R.id.new_habit_title);
@@ -39,10 +44,7 @@ public class AddHabitActivity extends BaseActivity {
         Habit habit = new Habit();
         habit.setName(habitTitle.getText().toString());
 
-        FileHandler fileHandler = new AndroidFileHandler(this);
-        IHabitService habitService = new HabitService(fileHandler);
-
-        habitService.addHabit(habit);
+        habitRepository.addHabit(habit);
     }
 
 }
