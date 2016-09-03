@@ -1,5 +1,6 @@
 package ca.antonious.habittracker.addhabit;
 
+import android.graphics.Path;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +13,14 @@ import ca.antonious.habittracker.FileHandler;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.IHabitService;
+import ca.antonious.habittracker.OptionPreviewView;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
 public class AddHabitActivity extends BaseActivity {
     private Button addButton;
-    private EditText habitTitle;
+    private OptionPreviewView nameOption;
+    private OptionPreviewView startingDateOption;
 
     private HabitRepository habitRepository;
 
@@ -29,7 +32,8 @@ public class AddHabitActivity extends BaseActivity {
         habitRepository = getHabitTrackerApplication().getHabitRepository();
 
         addButton = (Button) findViewById(R.id.add_habit);
-        habitTitle = (EditText) findViewById(R.id.new_habit_title);
+        nameOption = (OptionPreviewView) findViewById(R.id.habit_label_option);
+        startingDateOption = (OptionPreviewView) findViewById(R.id.habit_start_option);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +46,6 @@ public class AddHabitActivity extends BaseActivity {
 
     private void onAdd() {
         Habit habit = new Habit();
-        habit.setName(habitTitle.getText().toString());
 
         habitRepository.addHabit(habit);
     }
