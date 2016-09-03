@@ -1,14 +1,22 @@
 package ca.antonious.habittracker.addhabit;
 
+import android.app.DatePickerDialog;
 import android.graphics.Path;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.BaseActivity;
+import ca.antonious.habittracker.DatePickerFragment;
+import ca.antonious.habittracker.EditTextFragment;
 import ca.antonious.habittracker.FileHandler;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.HabitService;
@@ -17,12 +25,15 @@ import ca.antonious.habittracker.OptionPreviewView;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
-public class AddHabitActivity extends BaseActivity {
+public class AddHabitActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
     private Button addButton;
     private OptionPreviewView nameOption;
     private OptionPreviewView startingDateOption;
 
     private HabitRepository habitRepository;
+
+    private EditTextFragment editTextFragment;
+    private DatePickerFragment datePickerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +53,42 @@ public class AddHabitActivity extends BaseActivity {
                 finish();
             }
         });
+
+        editTextFragment = new EditTextFragment();
+
+        datePickerFragment = new DatePickerFragment();
+        datePickerFragment.setDateSetListener(this);
+
+        nameOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextFragment.show(getSupportFragmentManager(), "label");
+            }
+        });
+
+        startingDateOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerFragment.show(getSupportFragmentManager(), "date");
+            }
+        });
     }
 
     private void onAdd() {
         Habit habit = new Habit();
+        habit.setName(nameOption.getPreviewText());
 
         habitRepository.addHabit(habit);
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, monthOfYear, dayOfMonth);
+
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        String date = humanReadableDateFormat.format(calendar.getTime());
+
+        startingDateOption.setPreviewText(date);
+    }
 }

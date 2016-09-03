@@ -12,6 +12,8 @@ import java.util.Calendar;
  * Created by George on 2016-09-03.
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    private DatePickerDialog.OnDateSetListener dateSetListener;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Calendar c = Calendar.getInstance();
@@ -24,6 +26,16 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        if (dateSetListener != null) {
+            dateSetListener.onDateSet(view, year, monthOfYear, dayOfMonth);
+        }
+    }
 
+    public DatePickerDialog.OnDateSetListener getDateSetListener() {
+        return dateSetListener;
+    }
+
+    public void setDateSetListener(DatePickerDialog.OnDateSetListener dateSetListener) {
+        this.dateSetListener = dateSetListener;
     }
 }
