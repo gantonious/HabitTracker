@@ -40,7 +40,7 @@ public class HabitDetailsActivity extends BaseActivity {
         setUpRecyclerView();
 
         // actually use id
-        bindHabit(habitRepository.getHabits().get(0));
+        displayHabit(habitRepository.getHabits().get(0));
     }
 
     private void setUpRecyclerView() {
@@ -51,7 +51,7 @@ public class HabitDetailsActivity extends BaseActivity {
         completionsRecyclerView.setAdapter(habitCompletionAdapter);
     }
 
-    private void bindHabit(Habit habit) {
+    private void displayHabit(Habit habit) {
         titleTextView.setText(habit.getName());
 
         habitCompletionAdapter.clear();
