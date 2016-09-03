@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by George on 2016-09-02.
  */
-public abstract class ArrayAdapter<T, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class ArrayAdapter<T, VH extends BaseViewHolder> extends RecyclerView.Adapter<VH> {
     private List<T> items = new ArrayList<>();
 
     public abstract VH onCreateViewHolder(ViewGroup parent, int viewType);
@@ -19,6 +19,11 @@ public abstract class ArrayAdapter<T, VH extends RecyclerView.ViewHolder> extend
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(BaseViewHolder holder) {
+        holder.onDetach();
     }
 
     public T get(int position) {

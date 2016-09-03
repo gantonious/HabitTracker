@@ -1,6 +1,6 @@
 package ca.antonious.habittracker.habitdetails;
 
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 
 import ca.antonious.habittracker.ArrayAdapter;
+import ca.antonious.habittracker.BaseViewHolder;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.HabitCompletion;
 
@@ -30,7 +31,7 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
         holder.setCompletionTimeText(habitCompletion.getCompletionTime().toString());
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends BaseViewHolder {
         private TextView dateTextView;
         private TextView timeTextView;
 
