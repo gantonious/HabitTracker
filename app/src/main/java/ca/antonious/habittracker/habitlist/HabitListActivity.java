@@ -3,7 +3,6 @@ package ca.antonious.habittracker.habitlist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,14 +12,8 @@ import android.view.View;
 
 import java.util.List;
 
-import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.BaseActivity;
-import ca.antonious.habittracker.FileHandler;
 import ca.antonious.habittracker.HabitRepository;
-import ca.antonious.habittracker.HabitService;
-import ca.antonious.habittracker.HabitAdapter;
-import ca.antonious.habittracker.HabitTrackerApplication;
-import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
 import ca.antonious.habittracker.models.Habit;
