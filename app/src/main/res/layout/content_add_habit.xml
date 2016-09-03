@@ -8,19 +8,19 @@
     tools:showIn="@layout/activity_add_habit">
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/new_habit_title"
         android:hint="Habit Name"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create"
-        android:id="@+id/button"
+        android:id="@+id/add_habit"
         android:layout_below="@+id/editText"
         android:layout_alignParentStart="true"
         android:layout_marginTop="110dp"
