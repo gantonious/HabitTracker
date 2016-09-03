@@ -27,7 +27,7 @@
             android:label="@string/add_habit_activity_title" />
         <activity
             android:name=".habitdetails.HabitDetailsActivity"
-            android:label="habit_details_activity_title"/>
+            android:label="@string/habit_details_activity_title"/>
     </application>
 
 </manifest>
