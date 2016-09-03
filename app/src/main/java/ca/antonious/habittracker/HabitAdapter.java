@@ -17,9 +17,17 @@ import ca.antonious.habittracker.models.Habit;
 public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> {
     private List<Habit> habits = new ArrayList<>();
 
+    public HabitAdapter() {
+        setHasStableIds(true);
+    }
+
     public void setHabits(List<? extends Habit> habits) {
         this.habits.clear();
         this.habits.addAll(habits);
+    }
+
+    public Habit getHabit(int position) {
+        return habits.get(position);
     }
 
     @Override
@@ -31,7 +39,7 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(HabitAdapter.ViewHolder holder, int position) {
-        Habit habit = habits.get(position);
+        Habit habit = getHabit(position);
 
         holder.setTitle(habit.getName());
     }
@@ -39,6 +47,11 @@ public class HabitAdapter extends RecyclerView.Adapter<HabitAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return habits.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return getHabit(position).getId().hashCode();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
