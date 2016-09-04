@@ -23,6 +23,7 @@
             android:id="@+id/habit_dates"
             android:textSize="16dp"
             android:text="Everyday"
+            android:textColor="@color/colorAccent"
             android:layout_alignParentStart="true"
             android:layout_below="@id/habit_title"
             android:layout_width="wrap_content"
