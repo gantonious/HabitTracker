@@ -17,7 +17,7 @@ import ca.antonious.habittracker.views.OptionPreviewView;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
-public class AddHabitActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener {
+public class AddHabitActivity extends BaseActivity {
     private Button addButton;
     private OptionPreviewView nameOption;
     private OptionPreviewView startingDateOption;
@@ -47,9 +47,10 @@ public class AddHabitActivity extends BaseActivity implements DatePickerDialog.O
         });
 
         editTextFragment = new EditTextFragment();
+        editTextFragment.setOnConfirmListener(onConfirmListener);
 
         datePickerFragment = new DatePickerFragment();
-        datePickerFragment.setDateSetListener(this);
+        datePickerFragment.setDateSetListener(onDateSetListener);
 
         nameOption.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,14 +74,23 @@ public class AddHabitActivity extends BaseActivity implements DatePickerDialog.O
         habitRepository.addHabit(habit);
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, monthOfYear, dayOfMonth);
+    private EditTextFragment.OnConfirmListener onConfirmListener = new EditTextFragment.OnConfirmListener() {
+        @Override
+        public void onConfirm(String text) {
+            nameOption.setPreviewText(text);
+        }
+    };
 
-        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        String date = humanReadableDateFormat.format(calendar.getTime());
+    private DatePickerDialog.OnDateSetListener onDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, monthOfYear, dayOfMonth);
 
-        startingDateOption.setPreviewText(date);
-    }
+            SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+            String date = humanReadableDateFormat.format(calendar.getTime());
+
+            startingDateOption.setPreviewText(date);
+        }
+    };
 }
