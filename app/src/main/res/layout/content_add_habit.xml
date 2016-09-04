@@ -22,6 +22,26 @@
         custom:labelText="Set Starting Date"
         custom:previewText="September 3, 2016"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Repeat On"
+            android:textSize="17sp"/>
+
+        <ca.antonious.habittracker.views.DaysOfTheWeekPicker
+            android:id="@+id/habit_repeat_days"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"/>
+
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
