@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.habittracker.fileacess.IFileHandler;
 import ca.antonious.habittracker.utils.StringUtils;
 import ca.antonious.habittracker.models.Habit;
 
@@ -15,9 +16,9 @@ import ca.antonious.habittracker.models.Habit;
  * Created by George on 2016-09-01.
  */
 public class HabitService implements IHabitService {
-    private FileHandler fileHandler;
+    private IFileHandler fileHandler;
 
-    public HabitService(FileHandler fileHandler) {
+    public HabitService(IFileHandler fileHandler) {
         this.fileHandler = fileHandler;
     }
 

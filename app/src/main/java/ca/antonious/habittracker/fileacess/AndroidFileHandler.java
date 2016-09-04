@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.fileacess;
 
 import android.content.Context;
 
@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 /**
  * Created by George on 2016-09-01.
  */
-public class AndroidFileHandler implements FileHandler {
+public class AndroidFileHandler implements IFileHandler {
     private Context context;
 
     public AndroidFileHandler(Context context) {
