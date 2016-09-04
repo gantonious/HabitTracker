@@ -39,6 +39,8 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
         Habit habit = get(position);
 
+        holder.setOnCheckListener(null);
+
         if (hasHabitBeenCompletedRecently(habit)) {
             holder.setCompleted();
         } else {
@@ -112,6 +114,7 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
         @Override
         protected void onDetach() {
+            super.onDetach();
             checkBox.setOnCheckedChangeListener(null);
         }
     }
