@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
-import ca.antonious.habittracker.HabitRepository;
-import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
@@ -68,24 +66,6 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         habitCompletionAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.habit_details_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            onDelete();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void onDelete() {
         createDeleteAlertDialog().show();
     }
@@ -108,5 +88,23 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
                     }
                 })
                 .create();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.habit_details_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            onDelete();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
