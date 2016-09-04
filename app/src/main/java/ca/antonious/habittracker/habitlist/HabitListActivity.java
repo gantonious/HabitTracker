@@ -23,13 +23,13 @@ import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.observable.IObserver;
 
-public class HabitListActivity extends BaseActivity {
+public class HabitListActivity extends BaseActivity implements IHabitListView {
     private RecyclerView habitRecyclerView;
     private HabitAdapter habitAdapter = new HabitAdapter();
 
     private FloatingActionButton fab;
 
-    private IHabitRepository habitRepository;
+    private HabitListController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class HabitListActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        habitRepository = getHabitTrackerApplication().getHabitRepository();
+        controller = getHabitTrackerApplication().getHabitListController();
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,14 +72,23 @@ public class HabitListActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
 
-        habitRepository.addObserver(new IObserver<List<Habit>>() {
-            @Override
-            public void onNext(List<Habit> next) {
-                habitAdapter.clear();
-                habitAdapter.addAll(next);
-                habitAdapter.notifyDataSetChanged();
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        controller.attachView(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        controller.detachView();
+    }
+
+    @Override
+    public void displayHabits(List<Habit> habit) {
+        habitAdapter.setAll(habit);
+        habitAdapter.notifyDataSetChanged();
     }
 }
