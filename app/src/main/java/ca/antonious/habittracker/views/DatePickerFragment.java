@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.views;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

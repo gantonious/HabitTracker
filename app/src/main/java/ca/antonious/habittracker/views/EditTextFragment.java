@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

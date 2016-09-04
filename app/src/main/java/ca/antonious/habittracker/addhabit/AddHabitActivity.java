@@ -10,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import ca.antonious.habittracker.BaseActivity;
-import ca.antonious.habittracker.DatePickerFragment;
-import ca.antonious.habittracker.EditTextFragment;
+import ca.antonious.habittracker.views.DatePickerFragment;
+import ca.antonious.habittracker.views.EditTextFragment;
 import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.views.OptionPreviewView;
 import ca.antonious.habittracker.R;
