@@ -20,6 +20,7 @@ import ca.antonious.habittracker.EditTextFragment;
 import ca.antonious.habittracker.FileHandler;
 import ca.antonious.habittracker.HabitRepository;
 import ca.antonious.habittracker.HabitService;
+import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.IHabitService;
 import ca.antonious.habittracker.OptionPreviewView;
 import ca.antonious.habittracker.R;
@@ -30,7 +31,7 @@ public class AddHabitActivity extends BaseActivity implements DatePickerDialog.O
     private OptionPreviewView nameOption;
     private OptionPreviewView startingDateOption;
 
-    private HabitRepository habitRepository;
+    private IHabitRepository habitRepository;
 
     private EditTextFragment editTextFragment;
     private DatePickerFragment datePickerFragment;

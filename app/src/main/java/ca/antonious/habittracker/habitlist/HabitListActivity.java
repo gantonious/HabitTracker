@@ -16,6 +16,7 @@ import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.HabitRepository;
+import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
 import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
@@ -28,7 +29,7 @@ public class HabitListActivity extends BaseActivity {
 
     private FloatingActionButton fab;
 
-    private HabitRepository habitRepository;
+    private IHabitRepository habitRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

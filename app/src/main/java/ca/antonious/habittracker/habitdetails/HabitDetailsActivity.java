@@ -12,6 +12,7 @@ import android.widget.TextView;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.HabitRepository;
+import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
@@ -24,7 +25,7 @@ public class HabitDetailsActivity extends BaseActivity {
     private LinearLayoutManager linearLayoutManager;
     private HabitCompletionAdapter habitCompletionAdapter;
 
-    private HabitRepository habitRepository;
+    private IHabitRepository habitRepository;
 
     private Habit habit;
 

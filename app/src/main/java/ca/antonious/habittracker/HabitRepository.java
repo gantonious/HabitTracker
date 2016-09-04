@@ -14,7 +14,7 @@ import ca.antonious.habittracker.observable.IObserver;
 /**
  * Created by George on 2016-09-02.
  */
-public class HabitRepository implements IObservable<List<Habit>> {
+public class HabitRepository implements IHabitRepository {
     private IHabitService habitService;
     private Map<String, Habit> habits;
 

@@ -6,9 +6,9 @@ import android.app.Application;
  * Created by George on 2016-09-02.
  */
 public class HabitTrackerApplication extends Application {
-    private HabitRepository habitRepository;
+    private IHabitRepository habitRepository;
 
-    public HabitRepository getHabitRepository() {
+    public IHabitRepository getHabitRepository() {
         ensureHabitRepository();
         return habitRepository;
     }
