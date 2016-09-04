@@ -12,6 +12,7 @@ import ca.antonious.habittracker.habitlist.HabitListController;
  */
 public class HabitTrackerApplication extends Application {
     private IHabitRepository habitRepository;
+    private HabitInteractionsFactory habitInteractionsFactory;
 
     public IHabitRepository getHabitRepository() {
         ensureHabitRepository();
@@ -26,11 +27,22 @@ public class HabitTrackerApplication extends Application {
         }
     }
 
-    public HabitListController getHabitListController() {
-        return new HabitListController(getHabitRepository());
+    public HabitInteractionsFactory getHabitInteractionsFactory() {
+        ensureHabitInteractionsFactory();
+        return habitInteractionsFactory;
     }
 
-    public HabitDetailsController getHabitDetailsController() {
-        return new HabitDetailsController(getHabitRepository());
+    private void ensureHabitInteractionsFactory() {
+        if (habitInteractionsFactory == null) {
+            habitInteractionsFactory = new HabitInteractionsFactory(getHabitRepository());
+        }
+    }
+
+    public HabitListController getHabitListController() {
+        return new HabitListController(getHabitRepository(), getHabitInteractionsFactory());
+    }
+
+    public HabitDetailsController getHabitDetailsController(String habitId) {
+        return new HabitDetailsController(getHabitRepository(), getHabitInteractionsFactory(), habitId);
     }
 }

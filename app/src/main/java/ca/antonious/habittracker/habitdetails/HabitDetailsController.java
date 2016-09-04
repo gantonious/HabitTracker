@@ -2,11 +2,9 @@ package ca.antonious.habittracker.habitdetails;
 
 import java.util.List;
 
-import ca.antonious.habittracker.CompleteHabit;
-import ca.antonious.habittracker.DeleteHabit;
+import ca.antonious.habittracker.HabitInteractionsFactory;
 import ca.antonious.habittracker.IController;
 import ca.antonious.habittracker.IHabitRepository;
-import ca.antonious.habittracker.RemoveCompletion;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.observable.IObserver;
 
@@ -14,57 +12,43 @@ import ca.antonious.habittracker.observable.IObserver;
  * Created by George on 2016-09-04.
  */
 public class HabitDetailsController implements IController<IHabitDetailsView> {
-    private Habit habit;
+    private String habitId;
     private IHabitDetailsView habitDetailsView;
     private IHabitRepository habitRepository;
+    private HabitInteractionsFactory habitInteractionsFactory;
 
-    public HabitDetailsController(IHabitRepository habitRepository) {
+    public HabitDetailsController(IHabitRepository habitRepository, HabitInteractionsFactory habitInteractionsFactory, String habitId) {
+        this.habitId = habitId;
         this.habitRepository = habitRepository;
-    }
-
-    public void loadHabit(String habitId) {
-        Habit habit = habitRepository.getHabit(habitId);
-
-        if (habit != null) {
-            this.habit = habit;
-            disptachDisplayHabit(habit);
-        }
+        this.habitInteractionsFactory = habitInteractionsFactory;
     }
 
     public void deleteHabit() {
-        if (habit != null) {
-            new DeleteHabit(habitRepository).delete(habit.getId());
-        }
+        habitInteractionsFactory.deleteHabit().delete(habitId);
     }
 
     public void markHabitAsComplete() {
-        if (habit != null) {
-            new CompleteHabit(habitRepository).complete(habit.getId());
-        }
+        habitInteractionsFactory.completeHabit().complete(habitId);
     }
 
     public void removeHabitCompletion(String completionId) {
-        if (habit != null) {
-            new RemoveCompletion(habitRepository).removeCompletionFromHabit(habit, completionId);
-        }
+        habitInteractionsFactory.removeCompletion().remove(habitId, completionId);
     }
 
     private IObserver<List<Habit>> habitListObserver = new IObserver<List<Habit>>() {
         @Override
         public void onNext(List<Habit> next) {
-            if (habit != null) {
-                Habit newHabit = getHabitFromHabitList(next);
-                if(newHabit != null) {
-                    habit = newHabit;
-                    disptachDisplayHabit(habit);
-                }
+            Habit newHabit = getHabitFromHabitList(next);
+            if(newHabit != null) {
+                dispatchDisplayHabit(newHabit);
             }
+
         }
     };
 
     private Habit getHabitFromHabitList(List<Habit> habits) {
         for (Habit habit: habits) {
-            if (habit.getId().equals(this.habit.getId())) {
+            if (habitId.equals(habit.getId())) {
                 return habit;
             }
         }
@@ -83,7 +67,7 @@ public class HabitDetailsController implements IController<IHabitDetailsView> {
         this.habitRepository.removeObserver(habitListObserver);
     }
 
-    private void disptachDisplayHabit(Habit habit) {
+    private void dispatchDisplayHabit(Habit habit) {
         if (habitDetailsView != null) {
             habitDetailsView.displayHabit(habit);
         }

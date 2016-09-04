@@ -3,6 +3,7 @@ package ca.antonious.habittracker.habitlist;
 import java.util.List;
 
 import ca.antonious.habittracker.CompleteHabit;
+import ca.antonious.habittracker.HabitInteractionsFactory;
 import ca.antonious.habittracker.IController;
 import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.models.Habit;
@@ -13,19 +14,16 @@ import ca.antonious.habittracker.observable.IObserver;
  */
 public class HabitListController implements IController<IHabitListView> {
     private IHabitListView habitListView;
-    private CompleteHabit completeHabit;
-
     private IHabitRepository habitRepository;
-    private IObserver<List<Habit>> habitListObserver;
+    private HabitInteractionsFactory habitInteractionsFactory;
 
-    public HabitListController(IHabitRepository habitRepository) {
+    public HabitListController(IHabitRepository habitRepository, HabitInteractionsFactory habitInteractionsFactory) {
         this.habitRepository = habitRepository;
-        this.completeHabit = new CompleteHabit(habitRepository);
-        this.habitListObserver = generateHabitListObserver();
+        this.habitInteractionsFactory = habitInteractionsFactory;
     }
 
     public void markHabitAsCompleted(String habitId) {
-        completeHabit.complete(habitId);
+        habitInteractionsFactory.completeHabit().complete(habitId);
     }
 
     public void attachView(IHabitListView habitListView) {
@@ -38,14 +36,13 @@ public class HabitListController implements IController<IHabitListView> {
         this.habitListView = null;
     }
 
-    private IObserver<List<Habit>> generateHabitListObserver() {
-        return new IObserver<List<Habit>>() {
-            @Override
-            public void onNext(List<Habit> next) {
-                dispatchDisplayHabits(next);
-            }
-        };
-    }
+    private IObserver<List<Habit>> habitListObserver = new IObserver<List<Habit>>() {
+        @Override
+        public void onNext(List<Habit> next) {
+            dispatchDisplayHabits(next);
+        }
+    };
+
 
     private void dispatchDisplayHabits(List<Habit> habits) {
         if (habitListView != null) {

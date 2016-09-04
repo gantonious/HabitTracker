@@ -9,10 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
+import ca.antonious.habittracker.models.HabitCompletion;
 
 public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsView {
     private TextView titleTextView;
@@ -33,9 +35,6 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         bindViews();
         resolveDependencies();
         setUpRecyclerView();
-
-        String id = getIntent().getStringExtra(Constants.EXTRA_HABIT_ID);
-        habitDetailsController.loadHabit(id);
     }
 
     private void bindViews() {
@@ -46,7 +45,8 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     }
 
     private void resolveDependencies() {
-        habitDetailsController = getHabitTrackerApplication().getHabitDetailsController();
+        String id = getIntent().getStringExtra(Constants.EXTRA_HABIT_ID);
+        habitDetailsController = getHabitTrackerApplication().getHabitDetailsController(id);
     }
 
     private void setUpRecyclerView() {
@@ -55,6 +55,13 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
 
         completionsRecyclerView.setLayoutManager(linearLayoutManager);
         completionsRecyclerView.setAdapter(habitCompletionAdapter);
+
+        habitCompletionAdapter.setItemClickedListener(new ArrayAdapter.ItemClickedListener<HabitCompletion>() {
+            @Override
+            public void onItemClicked(HabitCompletion item, int position) {
+                habitDetailsController.removeHabitCompletion(item.getId());
+            }
+        });
     }
 
     @Override
@@ -88,6 +95,18 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
                     }
                 })
                 .create();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        habitDetailsController.attachView(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        habitDetailsController.detachView();
     }
 
     @Override
