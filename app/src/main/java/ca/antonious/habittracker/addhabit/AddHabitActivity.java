@@ -1,28 +1,19 @@
 package ca.antonious.habittracker.addhabit;
 
 import android.app.DatePickerDialog;
-import android.graphics.Path;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import ca.antonious.habittracker.AndroidFileHandler;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.DatePickerFragment;
 import ca.antonious.habittracker.EditTextFragment;
-import ca.antonious.habittracker.FileHandler;
-import ca.antonious.habittracker.HabitRepository;
-import ca.antonious.habittracker.HabitService;
 import ca.antonious.habittracker.IHabitRepository;
-import ca.antonious.habittracker.IHabitService;
-import ca.antonious.habittracker.OptionPreviewView;
+import ca.antonious.habittracker.views.OptionPreviewView;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 

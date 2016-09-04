@@ -8,14 +8,14 @@
     tools:context=".addhabit.AddHabitActivity"
     tools:showIn="@layout/activity_add_habit">
 
-    <ca.antonious.habittracker.OptionPreviewView
+    <ca.antonious.habittracker.views.OptionPreviewView
         android:id="@+id/habit_label_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         custom:labelText="Set Label"
         custom:previewText="My New Habit"/>
 
-    <ca.antonious.habittracker.OptionPreviewView
+    <ca.antonious.habittracker.views.OptionPreviewView
         android:id="@+id/habit_start_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
