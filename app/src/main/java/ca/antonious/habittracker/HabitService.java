@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.antonious.habittracker.Utils.StringUtils;
+import ca.antonious.habittracker.utils.StringUtils;
 import ca.antonious.habittracker.models.Habit;
 
 /**

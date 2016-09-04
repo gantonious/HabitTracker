@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import ca.antonious.habittracker.Utils.StringUtils;
+import ca.antonious.habittracker.utils.StringUtils;
 
 /**
  * Created by George on 2016-09-03.

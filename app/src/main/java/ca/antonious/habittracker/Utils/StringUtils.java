@@ -1,4 +1,4 @@
-package ca.antonious.habittracker.Utils;
+package ca.antonious.habittracker.utils;
 
 /**
  * Created by George on 2016-09-02.
