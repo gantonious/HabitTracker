@@ -41,14 +41,12 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
         handleListItemClicks();
     }
 
-    @Override
-    protected void bindViews() {
+    private void bindViews() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
         habitRecyclerView = (RecyclerView) findViewById(R.id.habit_recycler_view);
     }
 
-    @Override
-    protected void resolveDependencies() {
+    private void resolveDependencies() {
         controller = getHabitTrackerApplication().getHabitListController();
     }
 
