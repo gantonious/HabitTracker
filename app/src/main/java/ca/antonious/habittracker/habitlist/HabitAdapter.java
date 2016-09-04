@@ -12,6 +12,7 @@ import java.util.Date;
 
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseViewHolder;
+import ca.antonious.habittracker.DaysToDescriptionMapper;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
@@ -48,6 +49,7 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
         }
 
         holder.setTitle(habit.getName());
+        holder.setDatesDescription(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
         holder.setOnCheckListener(handleCheck(habit));
     }
 
@@ -88,16 +90,22 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
     public static class ViewHolder extends BaseViewHolder {
         private TextView title;
+        private TextView dateToRepeat;
         private CheckBox checkBox;
 
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.habit_title);
+            dateToRepeat = (TextView) view.findViewById(R.id.habit_dates);
             checkBox = (CheckBox) view.findViewById(R.id.checkBox);
         }
 
         public void setTitle(String title) {
             this.title.setText(title);
+        }
+
+        public void setDatesDescription(String description) {
+            dateToRepeat.setText(description);
         }
 
         public void setOnCheckListener(CheckBox.OnCheckedChangeListener onCheckListener) {

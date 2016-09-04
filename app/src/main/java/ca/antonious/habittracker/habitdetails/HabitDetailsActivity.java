@@ -12,6 +12,7 @@ import android.widget.TextView;
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
+import ca.antonious.habittracker.DaysToDescriptionMapper;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
@@ -67,6 +68,7 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     @Override
     public void displayHabit(Habit habit) {
         titleTextView.setText(habit.getName());
+        habitDatesTextView.setText(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
 
         habitCompletionAdapter.clear();
         habitCompletionAdapter.addAll(habit.getCompletions());
