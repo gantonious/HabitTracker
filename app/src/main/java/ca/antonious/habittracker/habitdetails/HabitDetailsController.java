@@ -1,6 +1,7 @@
 package ca.antonious.habittracker.habitdetails;
 
 import ca.antonious.habittracker.CompleteHabit;
+import ca.antonious.habittracker.DeleteHabit;
 import ca.antonious.habittracker.IController;
 import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.RemoveCompletion;
@@ -24,6 +25,12 @@ public class HabitDetailsController implements IController<IHabitDetailsView> {
         if (habit != null) {
             this.habit = habit;
             disptachDisplayHabit(habit);
+        }
+    }
+
+    public void deleteHabit() {
+        if (habit != null) {
+            new DeleteHabit(habitRepository).delete(habit.getId());
         }
     }
 

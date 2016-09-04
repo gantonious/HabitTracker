@@ -16,37 +16,39 @@ import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
-public class HabitDetailsActivity extends BaseActivity {
+public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsView {
     private TextView titleTextView;
     private TextView creationDateTextView;
     private TextView habitDatesTextView;
-    private RecyclerView completionsRecyclerView;
 
+    private RecyclerView completionsRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private HabitCompletionAdapter habitCompletionAdapter;
 
-    private IHabitRepository habitRepository;
-
-    private Habit habit;
+    private HabitDetailsController habitDetailsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habit_details);
 
-        habitRepository = getHabitTrackerApplication().getHabitRepository();
+        bindViews();
+        resolveDependencies();
+        setUpRecyclerView();
 
+        String id = getIntent().getStringExtra(Constants.EXTRA_HABIT_ID);
+        habitDetailsController.loadHabit(id);
+    }
+
+    private void bindViews() {
         titleTextView = (TextView) findViewById(R.id.habit_details_title);
         creationDateTextView = (TextView) findViewById(R.id.habit_details_created_date);
         habitDatesTextView = (TextView) findViewById(R.id.habit_details_dates);
         completionsRecyclerView = (RecyclerView) findViewById(R.id.habit_details_recent_completions_list);
+    }
 
-        setUpRecyclerView();
-
-        String id = getIntent().getStringExtra(Constants.EXTRA_HABIT_ID);
-        habit = habitRepository.getHabit(id);
-
-        displayHabit(habit);
+    private void resolveDependencies() {
+        habitDetailsController = getHabitTrackerApplication().getHabitDetailsController();
     }
 
     private void setUpRecyclerView() {
@@ -57,7 +59,8 @@ public class HabitDetailsActivity extends BaseActivity {
         completionsRecyclerView.setAdapter(habitCompletionAdapter);
     }
 
-    private void displayHabit(Habit habit) {
+    @Override
+    public void displayHabit(Habit habit) {
         titleTextView.setText(habit.getName());
 
         habitCompletionAdapter.clear();
@@ -100,7 +103,7 @@ public class HabitDetailsActivity extends BaseActivity {
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        habitRepository.removeHabit(habit.getId());
+                        habitDetailsController.deleteHabit();
                         finish();
                     }
                 })
