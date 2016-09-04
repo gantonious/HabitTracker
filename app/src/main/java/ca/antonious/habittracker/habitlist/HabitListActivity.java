@@ -6,8 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import java.util.List;
@@ -15,19 +13,15 @@ import java.util.List;
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
-import ca.antonious.habittracker.HabitRepository;
-import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
 import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
 import ca.antonious.habittracker.models.Habit;
-import ca.antonious.habittracker.observable.IObserver;
 
 public class HabitListActivity extends BaseActivity implements IHabitListView {
+    private FloatingActionButton fab;
     private RecyclerView habitRecyclerView;
     private HabitAdapter habitAdapter = new HabitAdapter();
-
-    private FloatingActionButton fab;
 
     private HabitListController controller;
 
@@ -38,20 +32,39 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        controller = getHabitTrackerApplication().getHabitListController();
+        bindViews();
+        resolveDependencies();
+        setUpRecyclerView();
 
+        handleAddButtonClicks();
+        handleListScrolling();
+        handleListItemClicks();
+    }
+
+    private void bindViews() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        habitRecyclerView = (RecyclerView) findViewById(R.id.habit_recycler_view);
+    }
+
+    private void resolveDependencies() {
+        controller = getHabitTrackerApplication().getHabitListController();
+    }
+
+    private void setUpRecyclerView() {
+        habitRecyclerView.setAdapter(habitAdapter);
+        habitRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    private void handleAddButtonClicks() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HabitListActivity.this, AddHabitActivity.class));
             }
         });
+    }
 
-        habitRecyclerView = (RecyclerView) findViewById(R.id.habit_recycler_view);
-        habitRecyclerView.setAdapter(habitAdapter);
-        habitRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
+    private void handleListScrolling() {
         habitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy){
@@ -62,16 +75,22 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
                 }
             }
         });
+    }
 
+    private void handleListItemClicks() {
         habitAdapter.setItemClickedListener(new ArrayAdapter.ItemClickedListener<Habit>() {
             @Override
             public void onItemClicked(Habit item, int position) {
-                Intent intent = new Intent(HabitListActivity.this, HabitDetailsActivity.class);
-                intent.putExtra(Constants.EXTRA_HABIT_ID, item.getId());
-
-                startActivity(intent);
+                navigateToDetails(item.getId());
             }
         });
+    }
+
+    private void navigateToDetails(String habitID) {
+        Intent intent = new Intent(HabitListActivity.this, HabitDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_HABIT_ID, habitID);
+
+        startActivity(intent);
     }
 
     @Override
