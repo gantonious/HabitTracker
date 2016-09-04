@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseViewHolder;
 import ca.antonious.habittracker.R;
@@ -29,8 +32,18 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
 
         HabitCompletion habitCompletion = get(position);
 
-        holder.setCompletionDateText(habitCompletion.getCompletionTime().toString());
-        holder.setCompletionTimeText(habitCompletion.getCompletionTime().toString());
+        holder.setCompletionDateText(getPrettyDateFromHabit(habitCompletion));
+        holder.setCompletionTimeText(getPrettyTimeFromHabit(habitCompletion));
+    }
+
+    private String getPrettyDateFromHabit(HabitCompletion completion) {
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        return humanReadableDateFormat.format(completion.getCompletionTime());
+    }
+
+    private String getPrettyTimeFromHabit(HabitCompletion completion) {
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("hh:mm:ss");
+        return humanReadableDateFormat.format(completion.getCompletionTime());
     }
 
     public static class ViewHolder extends BaseViewHolder {
