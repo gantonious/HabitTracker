@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Habit {
     private String id;
     private String name;
+    private List<Days> daysToComplete = new ArrayList<>();
     private List<HabitCompletion> completions = new ArrayList<>();
 
     public Habit() {
@@ -50,4 +51,13 @@ public class Habit {
 
         return null;
     }
+
+    public List<Days> getDaysToComplete() {
+        return daysToComplete;
+    }
+
+    public void setDaysToComplete(List<Days> daysToComplete) {
+        this.daysToComplete = daysToComplete;
+    }
+
 }
