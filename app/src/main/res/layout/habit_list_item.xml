@@ -24,6 +24,7 @@
             android:textSize="16dp"
             android:text="Everyday"
             android:textColor="@color/colorAccent"
+            android:fontFamily="sans-serif-medium"
             android:layout_alignParentStart="true"
             android:layout_below="@id/habit_title"
             android:layout_width="wrap_content"
