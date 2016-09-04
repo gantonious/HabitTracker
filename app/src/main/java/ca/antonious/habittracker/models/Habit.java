@@ -40,4 +40,14 @@ public class Habit {
         this.completions.clear();
         this.completions.addAll(completions);
     }
+
+    public HabitCompletion getCompletion(String completionId) {
+        for (HabitCompletion habitCompletion: getCompletions()) {
+            if (completionId.equals(habitCompletion.getId())) {
+                return habitCompletion;
+            }
+        }
+
+        return null;
+    }
 }
