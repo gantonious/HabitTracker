@@ -52,7 +52,7 @@ public class DaysToDescriptionMapper {
     }
 
     private String constructDaysDescription(List<Days> days) {
-        if (days.isEmpty()) return "";
+        if (days.isEmpty()) return "Never";
 
         Collections.sort(days);
 
