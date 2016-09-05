@@ -92,12 +92,14 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
         private TextView title;
         private TextView dateToRepeat;
         private Button completeButton;
+        private View completionIndicator;
 
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.habit_title);
             dateToRepeat = (TextView) view.findViewById(R.id.habit_dates);
             completeButton = (Button) view.findViewById(R.id.complete_button);
+            completionIndicator = view.findViewById(R.id.completion_indicator);
         }
 
         public void setTitle(String title) {
@@ -117,11 +119,11 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
         }
 
         public void setCompleted() {
-
+            completionIndicator.setVisibility(View.VISIBLE);
         }
 
         public void setNotCompleted() {
-
+            completionIndicator.setVisibility(View.GONE);
         }
 
         @Override
