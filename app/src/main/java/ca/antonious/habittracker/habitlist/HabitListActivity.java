@@ -39,16 +39,14 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
         handleAddButtonClicks();
         handleListScrolling();
         handleListItemClicks();
-        handleChecks();
+        handleCompleteClicks();
     }
 
-    private void handleChecks() {
-        habitAdapter.setHabitCheckedListener(new HabitAdapter.HabitCheckedListener() {
+    private void handleCompleteClicks() {
+        habitAdapter.setOnCompleteClickedListener(new HabitAdapter.OnCompleteClickedListener() {
             @Override
-            public void onItemChecked(Habit habit, boolean isChecked) {
-                if (isChecked) {
-                    controller.markHabitAsCompleted(habit.getId());
-                }
+            public void onComplete(Habit habit, int position) {
+                controller.markHabitAsCompleted(habit.getId());
             }
         });
     }

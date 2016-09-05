@@ -3,8 +3,8 @@ package ca.antonious.habittracker.habitlist;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -21,7 +21,7 @@ import ca.antonious.habittracker.models.HabitCompletion;
  * Created by George on 2016-09-01.
  */
 public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
-    private HabitCheckedListener habitCheckedListener;
+    private OnCompleteClickedListener onCompleteClickedListener;
 
     public HabitAdapter() {
         setHasStableIds(true);
@@ -50,7 +50,7 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
         holder.setTitle(habit.getName());
         holder.setDatesDescription(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
-        holder.setOnCheckListener(handleCheck(habit));
+        holder.setOnCompleteClickedListener(handleCompletionClick(habit, position));
     }
 
     private boolean hasHabitBeenCompletedRecently(Habit habit) {
@@ -74,11 +74,11 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
         return date.compareTo(calendar.getTime()) > 0;
     }
 
-    private CheckBox.OnCheckedChangeListener handleCheck(final Habit habit) {
-        return new CompoundButton.OnCheckedChangeListener() {
+    private View.OnClickListener handleCompletionClick(final Habit habit, final int position) {
+        return new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                dispatchOnHabitChecked(habit, isChecked);
+            public void onClick(View v) {
+                dispatchOnCompleteEvent(habit, position);
             }
         };
     }
@@ -91,13 +91,13 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
     public static class ViewHolder extends BaseViewHolder {
         private TextView title;
         private TextView dateToRepeat;
-        private CheckBox checkBox;
+        private Button completeButton;
 
         public ViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.habit_title);
             dateToRepeat = (TextView) view.findViewById(R.id.habit_dates);
-            checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+            completeButton = (Button) view.findViewById(R.id.complete_button);
         }
 
         public void setTitle(String title) {
@@ -108,40 +108,44 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
             dateToRepeat.setText(description);
         }
 
+        public void setOnCompleteClickedListener(View.OnClickListener onClickListener) {
+            completeButton.setOnClickListener(onClickListener);
+        }
+
         public void setOnCheckListener(CheckBox.OnCheckedChangeListener onCheckListener) {
-            checkBox.setOnCheckedChangeListener(onCheckListener);
+
         }
 
         public void setCompleted() {
-            checkBox.setChecked(true);
+
         }
 
         public void setNotCompleted() {
-            checkBox.setChecked(false);
+
         }
 
         @Override
         protected void onDetach() {
             super.onDetach();
-            checkBox.setOnCheckedChangeListener(null);
+            completeButton.setOnClickListener(null);
         }
     }
 
-    public HabitCheckedListener getHabitCheckedListener() {
-        return habitCheckedListener;
+    public OnCompleteClickedListener getOnCompleteClickedListener() {
+        return onCompleteClickedListener;
     }
 
-    public void setHabitCheckedListener(HabitCheckedListener habitCheckedListener) {
-        this.habitCheckedListener = habitCheckedListener;
+    public void setOnCompleteClickedListener(OnCompleteClickedListener onCompleteClickedListener) {
+        this.onCompleteClickedListener = onCompleteClickedListener;
     }
 
-    private void dispatchOnHabitChecked(Habit habit, boolean isChecked) {
-        if (getHabitCheckedListener() != null) {
-            getHabitCheckedListener().onItemChecked(habit, isChecked);
+    private void dispatchOnCompleteEvent(Habit completedHabit, int position) {
+        if (onCompleteClickedListener != null) {
+            onCompleteClickedListener.onComplete(completedHabit, position);
         }
     }
 
-    public interface HabitCheckedListener {
-        void onItemChecked(Habit habit, boolean isChecked);
+    public interface OnCompleteClickedListener {
+        void onComplete(Habit habit, int position);
     }
 }
