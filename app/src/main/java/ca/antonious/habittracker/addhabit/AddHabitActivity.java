@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ca.antonious.habittracker.BaseActivity;
@@ -27,6 +28,8 @@ public class AddHabitActivity extends BaseActivity {
     private OptionPreviewView startingDateOption;
     private DaysOfTheWeekPicker daysOfTheWeekPicker;
 
+    private Date startingDate;
+
     private IHabitRepository habitRepository;
 
     private EditTextFragment editTextFragment;
@@ -41,6 +44,8 @@ public class AddHabitActivity extends BaseActivity {
         resolveDependencies();
         configureDialogs();
         configureListeners();
+
+        setStartingDate(new Date());
     }
 
     private void bindViews() {
@@ -93,6 +98,7 @@ public class AddHabitActivity extends BaseActivity {
     private void onAdd() {
         Habit habit = new Habit();
         habit.setName(nameOption.getPreviewText());
+        habit.setStartDate(startingDate);
         habit.setDaysToComplete(fromDaysOfTheWeek(daysOfTheWeekPicker.getSelectedDays()));
 
         habitRepository.addHabit(habit);
@@ -125,10 +131,15 @@ public class AddHabitActivity extends BaseActivity {
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, monthOfYear, dayOfMonth);
 
-            SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-            String date = humanReadableDateFormat.format(calendar.getTime());
-
-            startingDateOption.setPreviewText(date);
+            setStartingDate(calendar.getTime());
         }
     };
+
+    private void setStartingDate(Date date) {
+        startingDate = date;
+
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        String formatedDate = humanReadableDateFormat.format(date);
+        startingDateOption.setPreviewText(formatedDate);
+    }
 }
