@@ -57,10 +57,10 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         completionsRecyclerView.setLayoutManager(linearLayoutManager);
         completionsRecyclerView.setAdapter(habitCompletionAdapter);
 
-        habitCompletionAdapter.setItemClickedListener(new ArrayAdapter.ItemClickedListener<HabitCompletion>() {
+        habitCompletionAdapter.setCompletionRemovedListener(new HabitCompletionAdapter.CompletionRemovedListener() {
             @Override
-            public void onItemClicked(HabitCompletion item, int position) {
-                habitDetailsController.removeHabitCompletion(item.getId());
+            public void onCompletionRemoved(HabitCompletion habitCompletion, int position) {
+                habitDetailsController.removeHabitCompletion(habitCompletion.getId());
             }
         });
     }

@@ -14,16 +14,19 @@
             android:textSize="16dp"
             android:text="October 31st, 2016"
             android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/delete_completion_icon"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/completion_time"
-            android:textSize="16dp"
-            android:text="4:20 pm"
-            android:layout_alignParentEnd="true"
+        <ImageView
+            android:id="@+id/delete_completion_icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/cross_24dp" />
 
     </RelativeLayout>
 

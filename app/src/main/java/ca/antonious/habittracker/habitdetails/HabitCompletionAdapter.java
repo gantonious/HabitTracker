@@ -4,15 +4,14 @@ package ca.antonious.habittracker.habitdetails;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseViewHolder;
-import ca.antonious.habittracker.CompleteHabit;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.HabitCompletion;
 
@@ -37,15 +36,25 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
     public long getItemId(int position) {
         return get(position).getId().hashCode();
     }
-    
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
 
         HabitCompletion habitCompletion = get(position);
 
-        holder.setCompletionDateText(getPrettyDateFromHabit(habitCompletion));
+        holder.setCompletionDateDescription(getPrettyDateFromHabit(habitCompletion));
         holder.setCompletionTimeText(getPrettyTimeFromHabit(habitCompletion));
+        holder.setOnDeleteClickedListener(generateOnDeleteListener(habitCompletion, position));
+    }
+
+    private View.OnClickListener generateOnDeleteListener(final HabitCompletion habitCompletion, final int position) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchCompletionRemovedListener(habitCompletion, position);
+            }
+        };
     }
 
     private String getPrettyDateFromHabit(HabitCompletion completion) {
@@ -60,21 +69,38 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
 
     public static class ViewHolder extends BaseViewHolder {
         private TextView dateTextView;
-        private TextView timeTextView;
+        private ImageView deleteButton;
 
         public ViewHolder(View view) {
             super(view);
 
             dateTextView = (TextView) view.findViewById(R.id.completion_date);
-            timeTextView = (TextView) view.findViewById(R.id.completion_time);
+            deleteButton = (ImageView) view.findViewById(R.id.delete_completion_icon);
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
-        public void setCompletionDateText(String completionDateText) {
-            dateTextView.setText(completionDateText);
+        public void setCompletionDateDescription(String description) {
+            dateTextView.setText(description);
         }
 
         public void setCompletionTimeText(String completionTimeText) {
-            timeTextView.setText(completionTimeText);
+
+        }
+
+        public void setOnDeleteClickedListener(View.OnClickListener onDeleteClickedListener) {
+            deleteButton.setOnClickListener(onDeleteClickedListener);
+        }
+
+        @Override
+        protected void onDetach() {
+            super.onDetach();
+            setOnDeleteClickedListener(null);
         }
     }
 
@@ -86,13 +112,13 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
         this.completionRemovedListener = completionRemovedListener;
     }
 
-    private void dispatchCompletionRemovedListener(HabitCompletion habitCompletion) {
+    private void dispatchCompletionRemovedListener(HabitCompletion habitCompletion, int position) {
         if (getCompletionRemovedListener() != null) {
-            getCompletionRemovedListener().onCompletionRemoved(habitCompletion);
+            getCompletionRemovedListener().onCompletionRemoved(habitCompletion, position);
         }
     }
 
     public interface CompletionRemovedListener {
-        void onCompletionRemoved(HabitCompletion habitCompletion);
+        void onCompletionRemoved(HabitCompletion habitCompletion, int position);
     }
 }
