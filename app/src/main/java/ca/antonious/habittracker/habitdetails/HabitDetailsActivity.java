@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+
 import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
@@ -69,10 +71,16 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     public void displayHabit(Habit habit) {
         titleTextView.setText(habit.getName());
         habitDatesTextView.setText(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
+        creationDateTextView.setText(getCreationDateDescription(habit));
 
         habitCompletionAdapter.clear();
         habitCompletionAdapter.addAll(habit.getCompletions());
         habitCompletionAdapter.notifyDataSetChanged();
+    }
+
+    private String getCreationDateDescription(Habit habit) {
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        return "Started on " + humanReadableDateFormat.format(habit.getStartDate());
     }
 
     private void onDelete() {
