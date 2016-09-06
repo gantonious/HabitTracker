@@ -58,7 +58,7 @@ public class HabitCompletionAdapter extends ArrayAdapter<HabitCompletion, HabitC
     }
 
     private String getPrettyDateFromHabit(HabitCompletion completion) {
-        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy 'at' hh:mm a");
         return humanReadableDateFormat.format(completion.getCompletionTime());
     }
 
