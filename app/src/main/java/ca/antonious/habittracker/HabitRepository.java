@@ -1,6 +1,9 @@
 package ca.antonious.habittracker;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +34,15 @@ public class HabitRepository implements IHabitRepository {
                 habits.put(habit.getId(), habit);
             }
         }
-        return new ArrayList<>(habits.values());
+
+        return getSortedHabits();
+    }
+
+    private List<Habit> getSortedHabits() {
+        List<Habit> sortedHabits = new ArrayList<>(habits.values());
+        Collections.sort(sortedHabits, reverseChronologicalHabitComparator);
+
+        return sortedHabits;
     }
 
     public Habit getHabit(String id) {
@@ -85,4 +96,11 @@ public class HabitRepository implements IHabitRepository {
     public void removeAllObservers() {
         observers.clear();
     }
+
+    private static Comparator<Habit> reverseChronologicalHabitComparator  = new Comparator<Habit>() {
+        @Override
+        public int compare(Habit lhs, Habit rhs) {
+            return rhs.getStartDate().compareTo(lhs.getStartDate());
+        }
+    };
 }
