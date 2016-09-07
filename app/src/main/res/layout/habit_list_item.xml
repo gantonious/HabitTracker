@@ -36,11 +36,11 @@
             android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/complete_button"
             android:layout_width="wrap_content"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:layout_height="35dp"
-            android:id="@+id/complete_button"
             style="?attr/borderlessButtonStyle"
             android:text="Complete"
             android:textAllCaps="false"
