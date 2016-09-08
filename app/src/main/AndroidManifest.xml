@@ -14,8 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".habitlist.HabitListActivity"
-            android:label="@string/habit_list_activity_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/habit_list_activity_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

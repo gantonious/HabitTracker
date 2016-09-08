@@ -29,15 +29,12 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         bindViews();
         resolveDependencies();
         setUpRecyclerView();
 
         handleAddButtonClicks();
-        handleListScrolling();
         handleListItemClicks();
         handleCompleteClicks();
     }
@@ -70,19 +67,6 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HabitListActivity.this, AddHabitActivity.class));
-            }
-        });
-    }
-
-    private void handleListScrolling() {
-        habitRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
-                if (dy > 10) {
-                    fab.hide();
-                } else if (dy < 0) {
-                    fab.show();
-                }
             }
         });
     }

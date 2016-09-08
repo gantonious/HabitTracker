@@ -22,7 +22,7 @@ public class EditTextFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
 
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.set_text_dialog, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.set_text_dialog, null);
         editText = (EditText) view.findViewById(R.id.text_input);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity())
