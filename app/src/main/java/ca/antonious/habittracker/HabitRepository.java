@@ -29,30 +29,18 @@ public class HabitRepository implements IHabitRepository {
     }
 
     public List<Habit> getHabits() {
-        if (habits.isEmpty()) {
-            for (Habit habit: habitService.getHabits()) {
-                habits.put(habit.getId(), habit);
-            }
-        }
-
+        ensureHabits();
         return getSortedHabits();
     }
 
-    private List<Habit> getSortedHabits() {
-        List<Habit> sortedHabits = new ArrayList<>(habits.values());
-        Collections.sort(sortedHabits, reverseChronologicalHabitComparator);
-
-        return sortedHabits;
-    }
 
     public Habit getHabit(String id) {
-        getHabits();
-
+        ensureHabits();
         return habits.get(id);
     }
 
     public void addHabit(Habit habit) {
-        getHabits();
+        ensureHabits();
 
         habitService.addHabit(habit);
         habits.put(habit.getId(), habit);
@@ -68,11 +56,26 @@ public class HabitRepository implements IHabitRepository {
     }
 
     public void removeHabit(String id) {
-        getHabits();
-
+        ensureHabits();
+        
         habitService.removeHabit(id);
         habits.remove(id);
         notifyChange();
+    }
+
+    private void ensureHabits() {
+        if (habits.isEmpty()) {
+            for (Habit habit: habitService.getHabits()) {
+                habits.put(habit.getId(), habit);
+            }
+        }
+    }
+
+    private List<Habit> getSortedHabits() {
+        List<Habit> sortedHabits = new ArrayList<>(habits.values());
+        Collections.sort(sortedHabits, reverseChronologicalHabitComparator);
+
+        return sortedHabits;
     }
 
     private void notifyChange() {
