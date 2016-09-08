@@ -48,7 +48,7 @@ public class HabitRepository implements IHabitRepository {
     }
 
     public void updateHabit(Habit habit) {
-        getHabits();
+        ensureHabits();
 
         habitService.updateHabit(habit);
         habits.put(habit.getId(), habit);
@@ -57,7 +57,7 @@ public class HabitRepository implements IHabitRepository {
 
     public void removeHabit(String id) {
         ensureHabits();
-        
+
         habitService.removeHabit(id);
         habits.remove(id);
         notifyChange();
