@@ -14,6 +14,9 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -118,6 +121,7 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     }
 
     private void displayRecentCompletionsList(List<HabitCompletion> habitCompletions) {
+        Collections.sort(habitCompletions, reverseChronologicalHabitCompletionComparator);
         emptyRecentHabitCompletionsMessages.setVisibility(View.GONE);
 
         habitCompletionAdapter.setAll(habitCompletions);
@@ -236,4 +240,11 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
 
         return super.onOptionsItemSelected(item);
     }
+
+    private static Comparator<HabitCompletion> reverseChronologicalHabitCompletionComparator  = new Comparator<HabitCompletion>() {
+        @Override
+        public int compare(HabitCompletion lhs, HabitCompletion rhs) {
+            return rhs.getCompletionTime().compareTo(lhs.getCompletionTime());
+        }
+    };
 }
