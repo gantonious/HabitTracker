@@ -10,7 +10,8 @@
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".habitlist.HabitListActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:animateLayoutChanges="true">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/habit_recycler_view"

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.antonious.habittracker.ArrayAdapter;
@@ -112,12 +113,13 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
     }
 
     private void displayNoHabitsMessage() {
-        habitRecyclerView.setVisibility(View.GONE);
+        habitAdapter.clear();
+        habitAdapter.notifyDataSetChanged();
+
         emptyHabitsTextView.setVisibility(View.VISIBLE);
     }
 
     private void displayHabitsList(List<Habit> habits) {
-        habitRecyclerView.setVisibility(View.VISIBLE);
         emptyHabitsTextView.setVisibility(View.GONE);
 
         habitAdapter.setAll(habits);
