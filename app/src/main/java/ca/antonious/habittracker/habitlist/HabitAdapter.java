@@ -54,24 +54,24 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
     }
 
     private boolean hasHabitBeenCompletedRecently(Habit habit) {
-        boolean hasBeenCompletedRecently = false;
-
         for (HabitCompletion habitCompletion: habit.getCompletions()) {
-
-            if (isDateWithinADay(habitCompletion.getCompletionTime())) {
-                hasBeenCompletedRecently = true;
-                break;
+            if (isDateToday(habitCompletion.getCompletionTime())) {
+                return true;
             }
         }
 
-        return hasBeenCompletedRecently;
+        return false;
     }
 
-    private boolean isDateWithinADay(Date date) {
+    private boolean isDateToday(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - 1);
 
-        return date.compareTo(calendar.getTime()) > 0;
+        Calendar currentDayCalender = Calendar.getInstance();
+        calendar.setTime(date);
+
+        return currentDayCalender.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR) &&
+                currentDayCalender.get(Calendar.YEAR) == calendar.get(Calendar.YEAR);
     }
 
     private View.OnClickListener handleCompletionClick(final Habit habit, final int position) {
