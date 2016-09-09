@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import ca.antonious.habittracker.models.Habit;
 
 public class HabitListActivity extends BaseActivity implements IHabitListView {
     private FloatingActionButton fab;
+    private TextView emptyHabitsTextView;
     private RecyclerView habitRecyclerView;
     private HabitAdapter habitAdapter = new HabitAdapter();
 
@@ -50,6 +52,7 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
 
     private void bindViews() {
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        emptyHabitsTextView = (TextView) findViewById(R.id.empty_habits_view);
         habitRecyclerView = (RecyclerView) findViewById(R.id.habit_recycler_view);
     }
 
@@ -100,8 +103,24 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
     }
 
     @Override
-    public void displayHabits(List<Habit> habit) {
-        habitAdapter.setAll(habit);
+    public void displayHabits(List<Habit> habits) {
+        if (habits.isEmpty()) {
+            displayNoHabitsMessage();
+        } else {
+            displayHabitsList(habits);
+        }
+    }
+
+    private void displayNoHabitsMessage() {
+        habitRecyclerView.setVisibility(View.GONE);
+        emptyHabitsTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void displayHabitsList(List<Habit> habits) {
+        habitRecyclerView.setVisibility(View.VISIBLE);
+        emptyHabitsTextView.setVisibility(View.GONE);
+
+        habitAdapter.setAll(habits);
         habitAdapter.notifyDataSetChanged();
     }
 }
