@@ -32,6 +32,7 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     private TextView habitDatesTextView;
     private TextView habitCompletionStatsDescription;
     private TextView habitMissedCompletionsDescription;
+    private TextView emptyRecentHabitCompletionsMessages;
     private Button completeHabitButton;
 
     private RecyclerView completionsRecyclerView;
@@ -58,6 +59,7 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         completionsRecyclerView = (RecyclerView) findViewById(R.id.habit_details_recent_completions_list);
         habitCompletionStatsDescription = (TextView) findViewById(R.id.habit_details_total_completions);
         habitMissedCompletionsDescription = (TextView) findViewById(R.id.habit_details_total_missed_completions);
+        emptyRecentHabitCompletionsMessages = (TextView) findViewById(R.id.habit_details_empty_completions);
         completeHabitButton = (Button) findViewById(R.id.habit_details_complete_button);
     }
 
@@ -97,9 +99,28 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         creationDateTextView.setText(getCreationDateDescription(habit));
         habitCompletionStatsDescription.setText(getCompletionsDescription(habit));
         habitMissedCompletionsDescription.setText(getMissedCompletionsDescription(habit));
+        displayRecentCompletions(habit);
+    }
 
+    private void displayRecentCompletions(Habit habit) {
+        if (habit.getCompletions().isEmpty()) {
+            displayEmptyRecentCompletions();
+        } else {
+            displayRecentCompletionsList(habit.getCompletions());
+        }
+    }
+
+    private void displayEmptyRecentCompletions() {
         habitCompletionAdapter.clear();
-        habitCompletionAdapter.addAll(habit.getCompletions());
+        habitCompletionAdapter.notifyDataSetChanged();
+
+        emptyRecentHabitCompletionsMessages.setVisibility(View.VISIBLE);
+    }
+
+    private void displayRecentCompletionsList(List<HabitCompletion> habitCompletions) {
+        emptyRecentHabitCompletionsMessages.setVisibility(View.GONE);
+
+        habitCompletionAdapter.setAll(habitCompletions);
         habitCompletionAdapter.notifyDataSetChanged();
     }
 
