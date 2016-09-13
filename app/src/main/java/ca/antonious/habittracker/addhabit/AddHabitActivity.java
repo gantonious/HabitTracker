@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import ca.antonious.habittracker.BaseActivity;
+import ca.antonious.habittracker.DayOfTheWeekToCalendarDateMapper;
 import ca.antonious.habittracker.views.DatePickerFragment;
 import ca.antonious.habittracker.views.DaysOfTheWeekPicker;
 import ca.antonious.habittracker.views.EditTextFragment;
@@ -74,7 +75,6 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
         @Override
         public void onClick(View v) {
             onAdd();
-            finish();
         }
     };
 
@@ -120,23 +120,9 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
     private void onAdd() {
         AddHabitRequest addHabitRequest = new AddHabitRequest(nameOption.getPreviewText(),
                                                               startingDate,
-                                                              fromDaysOfTheWeek(daysOfTheWeekPicker.getSelectedDays()));
+                                                              new DayOfTheWeekToCalendarDateMapper().map(daysOfTheWeekPicker.getSelectedDays()));
 
         addHabitController.addHabit(addHabitRequest);
-    }
-
-    private List<Integer> fromDaysOfTheWeek(List<DaysOfTheWeekPicker.DayOfTheWeek> daysOfTheWeek) {
-        List<Integer> selectedDays = new ArrayList<>();
-
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SUNDAY)) selectedDays.add(Calendar.SUNDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.MONDAY)) selectedDays.add(Calendar.MONDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.TUESDAY)) selectedDays.add(Calendar.TUESDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.WEDNESDAY)) selectedDays.add(Calendar.WEDNESDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.THURSDAY)) selectedDays.add(Calendar.THURSDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.FRIDAY)) selectedDays.add(Calendar.FRIDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SATURDAY)) selectedDays.add(Calendar.SATURDAY);
-
-        return selectedDays;
     }
 
     @Override
