@@ -1,5 +1,6 @@
 package ca.antonious.habittracker;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import ca.antonious.habittracker.models.Days;
  * Created by George on 2016-09-04.
  */
 public class DaysToDescriptionMapper {
-    public String map(List<Days> days) {
+    public String map(List<Integer> days) {
         if (isEveryDay(days)) {
             return "Everyday";
         } else if (isOnlyWeekdays(days)) {
@@ -21,44 +22,44 @@ public class DaysToDescriptionMapper {
         }
     }
 
-    private boolean isEveryDay(List<Days> days) {
-        return days.contains(Days.SUNDAY) &&
-                days.contains(Days.MONDAY) &&
-                days.contains(Days.TUESDAY) &&
-                days.contains(Days.WEDNESDAY) &&
-                days.contains(Days.THURSDAY) &&
-                days.contains(Days.FRIDAY) &&
-                days.contains(Days.SATURDAY);
+    private boolean isEveryDay(List<Integer> days) {
+        return days.contains(Calendar.SUNDAY) &&
+                days.contains(Calendar.MONDAY) &&
+                days.contains(Calendar.TUESDAY) &&
+                days.contains(Calendar.WEDNESDAY) &&
+                days.contains(Calendar.THURSDAY) &&
+                days.contains(Calendar.FRIDAY) &&
+                days.contains(Calendar.SATURDAY);
     }
 
-    private boolean isOnlyWeekdays(List<Days> days) {
-        return !days.contains(Days.SUNDAY) &&
-                days.contains(Days.MONDAY) &&
-                days.contains(Days.TUESDAY) &&
-                days.contains(Days.WEDNESDAY) &&
-                days.contains(Days.THURSDAY) &&
-                days.contains(Days.FRIDAY) &&
-                !days.contains(Days.SATURDAY);
+    private boolean isOnlyWeekdays(List<Integer> days) {
+        return !days.contains(Calendar.SUNDAY) &&
+                days.contains(Calendar.MONDAY) &&
+                days.contains(Calendar.TUESDAY) &&
+                days.contains(Calendar.WEDNESDAY) &&
+                days.contains(Calendar.THURSDAY) &&
+                days.contains(Calendar.FRIDAY) &&
+                !days.contains(Calendar.SATURDAY);
     }
 
-    private boolean isOnlyWeekends(List<Days> days) {
-        return days.contains(Days.SUNDAY) &&
-                !days.contains(Days.MONDAY) &&
-                !days.contains(Days.TUESDAY) &&
-                !days.contains(Days.WEDNESDAY) &&
-                !days.contains(Days.THURSDAY) &&
-                !days.contains(Days.FRIDAY) &&
-                days.contains(Days.SATURDAY);
+    private boolean isOnlyWeekends(List<Integer> days) {
+        return days.contains(Calendar.SUNDAY) &&
+                !days.contains(Calendar.MONDAY) &&
+                !days.contains(Calendar.TUESDAY) &&
+                !days.contains(Calendar.WEDNESDAY) &&
+                !days.contains(Calendar.THURSDAY) &&
+                !days.contains(Calendar.FRIDAY) &&
+                days.contains(Calendar.SATURDAY);
     }
 
-    private String constructDaysDescription(List<Days> days) {
+    private String constructDaysDescription(List<Integer> days) {
         if (days.isEmpty()) return "Never";
 
         Collections.sort(days);
 
         String out = "";
 
-        for (Days day: days) {
+        for (Integer day: days) {
             out += fromDay(day) + ", ";
         }
 
@@ -66,15 +67,15 @@ public class DaysToDescriptionMapper {
 
     }
 
-    private String fromDay(Days day) {
+    private String fromDay(Integer day) {
         switch (day) {
-            case SUNDAY: return "Sun";
-            case MONDAY: return "Mon";
-            case TUESDAY: return "Tues";
-            case WEDNESDAY: return "Wed";
-            case THURSDAY: return "Thurs";
-            case FRIDAY: return "Fri";
-            case SATURDAY: return "Sat";
+            case Calendar.SUNDAY: return "Sun";
+            case Calendar.MONDAY: return "Mon";
+            case Calendar.TUESDAY: return "Tues";
+            case Calendar.WEDNESDAY: return "Wed";
+            case Calendar.THURSDAY: return "Thurs";
+            case Calendar.FRIDAY: return "Fri";
+            case Calendar.SATURDAY: return "Sat";
             default: return "";
         }
     }

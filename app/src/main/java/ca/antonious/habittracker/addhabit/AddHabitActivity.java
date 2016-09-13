@@ -104,16 +104,16 @@ public class AddHabitActivity extends BaseActivity {
         habitRepository.addHabit(habit);
     }
 
-    private List<Days> fromDaysOfTheWeek(List<DaysOfTheWeekPicker.DayOfTheWeek> daysOfTheWeek) {
-        List<Days> selectedDays = new ArrayList<>();
+    private List<Integer> fromDaysOfTheWeek(List<DaysOfTheWeekPicker.DayOfTheWeek> daysOfTheWeek) {
+        List<Integer> selectedDays = new ArrayList<>();
 
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SUNDAY)) selectedDays.add(Days.SUNDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.MONDAY)) selectedDays.add(Days.MONDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.TUESDAY)) selectedDays.add(Days.TUESDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.WEDNESDAY)) selectedDays.add(Days.WEDNESDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.THURSDAY)) selectedDays.add(Days.THURSDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.FRIDAY)) selectedDays.add(Days.FRIDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SATURDAY)) selectedDays.add(Days.SATURDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SUNDAY)) selectedDays.add(Calendar.SUNDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.MONDAY)) selectedDays.add(Calendar.MONDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.TUESDAY)) selectedDays.add(Calendar.TUESDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.WEDNESDAY)) selectedDays.add(Calendar.WEDNESDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.THURSDAY)) selectedDays.add(Calendar.THURSDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.FRIDAY)) selectedDays.add(Calendar.FRIDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SATURDAY)) selectedDays.add(Calendar.SATURDAY);
 
         return selectedDays;
     }

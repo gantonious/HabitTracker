@@ -1,9 +1,12 @@
 package ca.antonious.habittracker.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import ca.antonious.habittracker.utils.CalendarUtils;
 
 /**
  * Created by George on 2016-09-01.
@@ -12,7 +15,7 @@ public class Habit {
     private String id;
     private String name;
     private Date startDate;
-    private List<Days> daysToComplete = new ArrayList<>();
+    private List<Integer> daysToComplete = new ArrayList<>();
     private List<HabitCompletion> completions = new ArrayList<>();
 
     public Habit() {
@@ -62,12 +65,25 @@ public class Habit {
         return null;
     }
 
-    public List<Days> getDaysToComplete() {
+    public List<Integer> getDaysToComplete() {
         return daysToComplete;
     }
 
-    public void setDaysToComplete(List<Days> daysToComplete) {
+    public void setDaysToComplete(List<Integer> daysToComplete) {
         this.daysToComplete = daysToComplete;
     }
 
+    public String getTotalMissedDaysDescription() {
+        return String.format("Missed %d days", getTotalMissedDays());
+    }
+
+    public int getTotalMissedDays() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+        Calendar startingDate = Calendar.getInstance();
+        startingDate.setTime(getStartDate());
+
+        return CalendarUtils.getDaysBetween(startingDate, calendar, getDaysToComplete());
+    }
 }
