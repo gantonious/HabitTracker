@@ -8,7 +8,7 @@ import java.util.List;
  * Created by George on 2016-09-12.
  */
 public class CalendarUtils {
-    public static int getDaysBetween(Calendar start, Calendar end) {
+    public static int getDaysBetween(Calendar inclusiveStart, Calendar exclusiveEnd) {
         List<Integer> days = Arrays.asList(Calendar.SUNDAY,
                                            Calendar.MONDAY,
                                            Calendar.TUESDAY,
@@ -17,15 +17,17 @@ public class CalendarUtils {
                                            Calendar.FRIDAY,
                                            Calendar.SATURDAY);
 
-        return getDaysBetween(start, end, days);
+        return getDaysBetween(inclusiveStart, exclusiveEnd, days);
     }
 
-    public static int getDaysBetween(Calendar start, Calendar end, List<Integer> daysOfTheWeekToInclude) {
-        int total = 0;
-        Calendar calendar = (Calendar) end.clone();
+    public static int getDaysBetween(Calendar inclusiveStart, Calendar exclusiveEnd, List<Integer> daysOfTheWeekToInclude) {
+        Calendar calendar = (Calendar) exclusiveEnd.clone();
+        calendar.add(Calendar.DAY_OF_YEAR, -1);
 
-        while (calendar.compareTo(start) > 0) {
-            if (daysOfTheWeekToInclude.contains(start.get(Calendar.DAY_OF_WEEK))) {
+        int total = 0;
+
+        while (calendar.compareTo(inclusiveStart) >= 0) {
+            if (daysOfTheWeekToInclude.contains(calendar.get(Calendar.DAY_OF_WEEK))) {
                 total++;
             }
             calendar.add(Calendar.DAY_OF_YEAR, -1);
