@@ -12,20 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
-import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.DaysToDescriptionMapper;
 import ca.antonious.habittracker.R;
-import ca.antonious.habittracker.models.Days;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
 
@@ -99,9 +93,9 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     public void displayHabit(Habit habit) {
         titleTextView.setText(habit.getName());
         habitDatesTextView.setText(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
-        creationDateTextView.setText(getCreationDateDescription(habit));
-        habitCompletionStatsDescription.setText(getCompletionsDescription(habit));
-        habitMissedCompletionsDescription.setText(getMissedCompletionsDescription(habit));
+        creationDateTextView.setText(habit.getStartingDateDescription());
+        habitCompletionStatsDescription.setText(habit.getCompletionsDescription());
+        habitMissedCompletionsDescription.setText(habit.getMissedDaysDescription());
         displayRecentCompletions(habit);
     }
 
@@ -126,65 +120,6 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
 
         habitCompletionAdapter.setAll(habitCompletions);
         habitCompletionAdapter.notifyDataSetChanged();
-    }
-
-    private String getCreationDateDescription(Habit habit) {
-        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        return "Started on " + humanReadableDateFormat.format(habit.getStartDate());
-    }
-
-    private String getCompletionsDescription(Habit habit) {
-        if (habit.getCompletions().size() > 1) {
-            return String.format("Completed %d times", habit.getCompletions().size());
-        } else if (habit.getCompletions().size() == 1) {
-            return "Completed once";
-        }
-        return "Never completed";
-    }
-
-    private String getMissedCompletionsDescription(Habit habit) {
-        int daysMissed = getMissedDays(habit);
-
-        if (daysMissed > 1) {
-            return String.format("Missed %d times", daysMissed);
-        } else if (daysMissed == 1) {
-            return "Missed once";
-        }
-        return "Never missed";
-    }
-
-    private int getMissedDays(Habit habit) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
-
-        Calendar startingDate = Calendar.getInstance();
-        startingDate.setTime(habit.getStartDate());
-
-        int total = 0;
-        List<Integer> calenderDays = mapHabitDaysToCalenderDays(habit);
-
-        while (calendar.compareTo(startingDate) > 0) {
-            if (calenderDays.contains(calendar.get(Calendar.DAY_OF_WEEK))) {
-                total++;
-            }
-            calendar.add(Calendar.DAY_OF_YEAR, -1);
-        }
-
-        return total;
-    }
-
-    private List<Integer> mapHabitDaysToCalenderDays(Habit habit) {
-        List<Integer> days = new ArrayList<>();
-
-        if (habit.getDaysToComplete().contains(Days.SUNDAY)) days.add(Calendar.SUNDAY);
-        if (habit.getDaysToComplete().contains(Days.MONDAY)) days.add(Calendar.MONDAY);
-        if (habit.getDaysToComplete().contains(Days.TUESDAY)) days.add(Calendar.TUESDAY);
-        if (habit.getDaysToComplete().contains(Days.WEDNESDAY)) days.add(Calendar.WEDNESDAY);
-        if (habit.getDaysToComplete().contains(Days.THURSDAY)) days.add(Calendar.THURSDAY);
-        if (habit.getDaysToComplete().contains(Days.FRIDAY)) days.add(Calendar.FRIDAY);
-        if (habit.getDaysToComplete().contains(Days.SATURDAY)) days.add(Calendar.SATURDAY);
-
-        return days;
     }
 
     private void onDelete() {

@@ -1,5 +1,6 @@
 package ca.antonious.habittracker.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -73,11 +74,32 @@ public class Habit {
         this.daysToComplete = daysToComplete;
     }
 
-    public String getTotalMissedDaysDescription() {
-        return String.format("Missed %d days", getTotalMissedDays());
+    public String getStartingDateDescription() {
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        return "Started on " + humanReadableDateFormat.format(getStartDate());
     }
 
-    public int getTotalMissedDays() {
+    public String getCompletionsDescription() {
+        if (getCompletions().size() > 1) {
+            return String.format("Completed %d times", getCompletions().size());
+        } else if (getCompletions().size() == 1) {
+            return "Completed once";
+        }
+        return "Never completed";
+    }
+
+    public String getMissedDaysDescription() {
+        int missedDays = getMissedDays();
+
+        if (missedDays > 1) {
+            return String.format("Missed %d times", missedDays);
+        } else if (missedDays == 1) {
+            return "Missed once";
+        }
+        return "Never missed";
+    }
+
+    public int getMissedDays() {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -1);
 
