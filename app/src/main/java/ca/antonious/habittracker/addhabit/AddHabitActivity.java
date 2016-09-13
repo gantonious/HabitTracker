@@ -113,8 +113,8 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
         startingDate = date;
 
         SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        String formatedDate = humanReadableDateFormat.format(date);
-        startingDateOption.setPreviewText(formatedDate);
+        String formattedDate = humanReadableDateFormat.format(date);
+        startingDateOption.setPreviewText(formattedDate);
     }
 
     private void onAdd() {
@@ -123,6 +123,11 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
                                                               new DayOfTheWeekToCalendarDateMapper().map(daysOfTheWeekPicker.getSelectedDays()));
 
         addHabitController.addHabit(addHabitRequest);
+    }
+
+    @Override
+    public void onHabitAdded() {
+        finish();
     }
 
     @Override
@@ -135,10 +140,5 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
     protected void onPause() {
         super.onPause();
         addHabitController.detachView();
-    }
-
-    @Override
-    public void onHabitAdded() {
-        finish();
     }
 }
