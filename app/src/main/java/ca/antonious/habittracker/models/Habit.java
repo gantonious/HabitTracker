@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import ca.antonious.habittracker.utils.CalendarUtils;
+import ca.antonious.habittracker.utils.DateUtils;
 
 /**
  * Created by George on 2016-09-01.
@@ -72,6 +73,15 @@ public class Habit {
 
     public void setDaysToComplete(List<Integer> daysToComplete) {
         this.daysToComplete = daysToComplete;
+    }
+
+    public boolean hasBeenCompletedToday() {
+        for (HabitCompletion completion: completions) {
+            if (DateUtils.areOnTheSameDate(completion.getCompletionTime(), new Date())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getStartingDateDescription() {

@@ -37,12 +37,10 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(HabitAdapter.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-
+        
         Habit habit = get(position);
 
-        holder.setOnCheckListener(null);
-
-        if (hasHabitBeenCompletedRecently(habit)) {
+        if (habit.hasBeenCompletedToday()) {
             holder.setCompleted();
         } else {
             holder.setNotCompleted();
@@ -51,27 +49,6 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
         holder.setTitle(habit.getName());
         holder.setDatesDescription(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
         holder.setOnCompleteClickedListener(handleCompletionClick(habit, position));
-    }
-
-    private boolean hasHabitBeenCompletedRecently(Habit habit) {
-        for (HabitCompletion habitCompletion: habit.getCompletions()) {
-            if (isDateToday(habitCompletion.getCompletionTime())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean isDateToday(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - 1);
-
-        Calendar currentDayCalender = Calendar.getInstance();
-        calendar.setTime(date);
-
-        return currentDayCalender.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR) &&
-                currentDayCalender.get(Calendar.YEAR) == calendar.get(Calendar.YEAR);
     }
 
     private View.OnClickListener handleCompletionClick(final Habit habit, final int position) {
@@ -114,9 +91,6 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
             completeButton.setOnClickListener(onClickListener);
         }
 
-        public void setOnCheckListener(CheckBox.OnCheckedChangeListener onCheckListener) {
-
-        }
 
         public void setCompleted() {
             completionIndicator.setVisibility(View.VISIBLE);
