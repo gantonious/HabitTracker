@@ -7,6 +7,10 @@ import ca.antonious.habittracker.fileacess.AndroidFileHandler;
 import ca.antonious.habittracker.fileacess.IFileHandler;
 import ca.antonious.habittracker.habitdetails.HabitDetailsController;
 import ca.antonious.habittracker.habitlist.HabitListController;
+import ca.antonious.habittracker.habitstorage.HabitRepository;
+import ca.antonious.habittracker.habitstorage.HabitService;
+import ca.antonious.habittracker.habitstorage.IHabitRepository;
+import ca.antonious.habittracker.habitstorage.IHabitService;
 import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
 
 /**

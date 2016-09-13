@@ -1,6 +1,6 @@
 package ca.antonious.habittracker.interactions;
 
-import ca.antonious.habittracker.IHabitRepository;
+import ca.antonious.habittracker.habitstorage.IHabitRepository;
 
 /**
  * Created by George on 2016-09-04.

@@ -4,7 +4,7 @@ import java.util.List;
 
 import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
 import ca.antonious.habittracker.IController;
-import ca.antonious.habittracker.IHabitRepository;
+import ca.antonious.habittracker.habitstorage.IHabitRepository;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.observable.IObserver;
 

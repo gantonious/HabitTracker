@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.habitstorage;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.fileacess.IFileHandler;
 import ca.antonious.habittracker.utils.StringUtils;
 import ca.antonious.habittracker.models.Habit;

@@ -3,7 +3,7 @@ package ca.antonious.habittracker.interactions;
 import java.util.Date;
 import java.util.List;
 
-import ca.antonious.habittracker.IHabitRepository;
+import ca.antonious.habittracker.habitstorage.IHabitRepository;
 import ca.antonious.habittracker.models.Habit;
 
 /**

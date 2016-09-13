@@ -13,14 +13,11 @@ import java.util.Date;
 import java.util.List;
 
 import ca.antonious.habittracker.BaseActivity;
-import ca.antonious.habittracker.models.Days;
 import ca.antonious.habittracker.views.DatePickerFragment;
 import ca.antonious.habittracker.views.DaysOfTheWeekPicker;
 import ca.antonious.habittracker.views.EditTextFragment;
-import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.views.OptionPreviewView;
 import ca.antonious.habittracker.R;
-import ca.antonious.habittracker.models.Habit;
 
 public class AddHabitActivity extends BaseActivity implements IAddHabitView {
     private Button addButton;

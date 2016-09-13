@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.habitstorage;
 
 import java.util.List;
 
