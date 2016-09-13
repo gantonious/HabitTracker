@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import ca.antonious.habittracker.utils.CalendarUtils;
 import ca.antonious.habittracker.utils.DateUtils;
+import ca.antonious.habittracker.utils.Utils;
 
 /**
  * Created by George on 2016-09-01.
@@ -117,5 +118,24 @@ public class Habit {
         startingDate.setTime(getStartDate());
 
         return CalendarUtils.getDaysBetween(startingDate, calendar, getDaysToComplete());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !obj.getClass().equals(getClass())) return false;
+
+        Habit otherHabit = (Habit) obj;
+
+        return Utils.equals(getId(), otherHabit.getId()) &&
+                Utils.equals(getName(), otherHabit.getName()) &&
+                Utils.equals(getStartDate(), otherHabit.getStartDate()) &&
+                Utils.equals(getDaysToComplete(), otherHabit.getDaysToComplete()) &&
+                Utils.equals(getCompletions(), otherHabit.getCompletions());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 }
