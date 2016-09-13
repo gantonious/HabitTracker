@@ -1,7 +1,8 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.interactions;
 
 import java.util.Date;
 
+import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
 

@@ -1,4 +1,6 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.interactions;
+
+import ca.antonious.habittracker.IHabitRepository;
 
 /**
  * Created by George on 2016-09-04.

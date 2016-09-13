@@ -2,8 +2,7 @@ package ca.antonious.habittracker.habitlist;
 
 import java.util.List;
 
-import ca.antonious.habittracker.CompleteHabit;
-import ca.antonious.habittracker.HabitInteractionsFactory;
+import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
 import ca.antonious.habittracker.IController;
 import ca.antonious.habittracker.IHabitRepository;
 import ca.antonious.habittracker.models.Habit;

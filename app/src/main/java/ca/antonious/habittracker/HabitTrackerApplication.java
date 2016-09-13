@@ -7,6 +7,7 @@ import ca.antonious.habittracker.fileacess.AndroidFileHandler;
 import ca.antonious.habittracker.fileacess.IFileHandler;
 import ca.antonious.habittracker.habitdetails.HabitDetailsController;
 import ca.antonious.habittracker.habitlist.HabitListController;
+import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
 
 /**
  * Created by George on 2016-09-02.

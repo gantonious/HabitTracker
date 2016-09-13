@@ -1,8 +1,7 @@
 package ca.antonious.habittracker.addhabit;
 
-import ca.antonious.habittracker.HabitInteractionsFactory;
+import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
 import ca.antonious.habittracker.IController;
-import ca.antonious.habittracker.IHabitRepository;
 
 /**
  * Created by George on 2016-09-04.
