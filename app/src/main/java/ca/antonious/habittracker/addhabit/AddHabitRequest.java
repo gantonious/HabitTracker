@@ -11,12 +11,6 @@ public class AddHabitRequest {
     private Date startDate;
     private List<Integer> daysOfTheWeek;
 
-    public AddHabitRequest(String name, Date startDate, List<Integer> daysOfTheWeek) {
-        this.name = name;
-        this.startDate = startDate;
-        this.daysOfTheWeek = daysOfTheWeek;
-    }
-
     public String getName() {
         return name;
     }

@@ -118,9 +118,11 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
     }
 
     private void onAdd() {
-        AddHabitRequest addHabitRequest = new AddHabitRequest(nameOption.getPreviewText(),
-                                                              startingDate,
-                                                              new DayOfTheWeekToCalendarDateMapper().map(daysOfTheWeekPicker.getSelectedDays()));
+        AddHabitRequest addHabitRequest = new AddHabitRequest();
+
+        addHabitRequest.setName(nameOption.getPreviewText());
+        addHabitRequest.setStartDate(startingDate);
+        addHabitRequest.setDaysOfTheWeek(new DayOfTheWeekToCalendarDateMapper().map(daysOfTheWeekPicker.getSelectedDays()));
 
         addHabitController.addHabit(addHabitRequest);
     }
