@@ -1,4 +1,4 @@
-package ca.antonious.habittracker;
+package ca.antonious.habittracker.utiltests;
 
 import org.junit.Assert;
 import org.junit.Test;
