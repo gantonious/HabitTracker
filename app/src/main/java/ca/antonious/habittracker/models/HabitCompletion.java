@@ -3,6 +3,8 @@ package ca.antonious.habittracker.models;
 import java.util.Date;
 import java.util.UUID;
 
+import ca.antonious.habittracker.utils.Utils;
+
 /**
  * Created by George on 2016-09-01.
  */
@@ -29,5 +31,21 @@ public class HabitCompletion {
 
     public void setCompletionTime(Date completionTime) {
         this.completionTime = completionTime;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !obj.getClass().equals(getClass())) return false;
+
+        HabitCompletion otherHabitCompletion = (HabitCompletion) obj;
+
+        return Utils.equals(getId(), otherHabitCompletion.getId()) &&
+                Utils.equals(getCompletionTime(), otherHabitCompletion.getCompletionTime());
+    }
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 }
