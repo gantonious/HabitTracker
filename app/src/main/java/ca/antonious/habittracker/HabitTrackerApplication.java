@@ -2,6 +2,7 @@ package ca.antonious.habittracker;
 
 import android.app.Application;
 
+import ca.antonious.habittracker.addhabit.AddHabitController;
 import ca.antonious.habittracker.fileacess.AndroidFileHandler;
 import ca.antonious.habittracker.fileacess.IFileHandler;
 import ca.antonious.habittracker.habitdetails.HabitDetailsController;
@@ -44,5 +45,9 @@ public class HabitTrackerApplication extends Application {
 
     public HabitDetailsController getHabitDetailsController(String habitId) {
         return new HabitDetailsController(getHabitRepository(), getHabitInteractionsFactory(), habitId);
+    }
+
+    public AddHabitController getAddHabitController() {
+        return new AddHabitController(getHabitInteractionsFactory());
     }
 }

@@ -22,7 +22,7 @@ import ca.antonious.habittracker.views.OptionPreviewView;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 
-public class AddHabitActivity extends BaseActivity {
+public class AddHabitActivity extends BaseActivity implements IAddHabitView {
     private Button addButton;
     private OptionPreviewView nameOption;
     private OptionPreviewView startingDateOption;
@@ -30,10 +30,10 @@ public class AddHabitActivity extends BaseActivity {
 
     private Date startingDate;
 
-    private IHabitRepository habitRepository;
-
     private EditTextFragment editTextFragment;
     private DatePickerFragment datePickerFragment;
+
+    private AddHabitController addHabitController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class AddHabitActivity extends BaseActivity {
     }
 
     private void resolveDependencies() {
-        habitRepository = getHabitTrackerApplication().getHabitRepository();
+        addHabitController = getHabitTrackerApplication().getAddHabitController();
     }
 
     private void configureDialogs() {
@@ -95,29 +95,6 @@ public class AddHabitActivity extends BaseActivity {
         }
     };
 
-    private void onAdd() {
-        Habit habit = new Habit();
-        habit.setName(nameOption.getPreviewText());
-        habit.setStartDate(startingDate);
-        habit.setDaysToComplete(fromDaysOfTheWeek(daysOfTheWeekPicker.getSelectedDays()));
-
-        habitRepository.addHabit(habit);
-    }
-
-    private List<Integer> fromDaysOfTheWeek(List<DaysOfTheWeekPicker.DayOfTheWeek> daysOfTheWeek) {
-        List<Integer> selectedDays = new ArrayList<>();
-
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SUNDAY)) selectedDays.add(Calendar.SUNDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.MONDAY)) selectedDays.add(Calendar.MONDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.TUESDAY)) selectedDays.add(Calendar.TUESDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.WEDNESDAY)) selectedDays.add(Calendar.WEDNESDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.THURSDAY)) selectedDays.add(Calendar.THURSDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.FRIDAY)) selectedDays.add(Calendar.FRIDAY);
-        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SATURDAY)) selectedDays.add(Calendar.SATURDAY);
-
-        return selectedDays;
-    }
-
     private EditTextFragment.OnConfirmListener onConfirmListener = new EditTextFragment.OnConfirmListener() {
         @Override
         public void onConfirm(String text) {
@@ -141,5 +118,44 @@ public class AddHabitActivity extends BaseActivity {
         SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
         String formatedDate = humanReadableDateFormat.format(date);
         startingDateOption.setPreviewText(formatedDate);
+    }
+
+    private void onAdd() {
+        AddHabitRequest addHabitRequest = new AddHabitRequest(nameOption.getPreviewText(),
+                                                              startingDate,
+                                                              fromDaysOfTheWeek(daysOfTheWeekPicker.getSelectedDays()));
+
+        addHabitController.addHabit(addHabitRequest);
+    }
+
+    private List<Integer> fromDaysOfTheWeek(List<DaysOfTheWeekPicker.DayOfTheWeek> daysOfTheWeek) {
+        List<Integer> selectedDays = new ArrayList<>();
+
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SUNDAY)) selectedDays.add(Calendar.SUNDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.MONDAY)) selectedDays.add(Calendar.MONDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.TUESDAY)) selectedDays.add(Calendar.TUESDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.WEDNESDAY)) selectedDays.add(Calendar.WEDNESDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.THURSDAY)) selectedDays.add(Calendar.THURSDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.FRIDAY)) selectedDays.add(Calendar.FRIDAY);
+        if (daysOfTheWeek.contains(DaysOfTheWeekPicker.DayOfTheWeek.SATURDAY)) selectedDays.add(Calendar.SATURDAY);
+
+        return selectedDays;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addHabitController.attachView(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        addHabitController.detachView();
+    }
+
+    @Override
+    public void onHabitAdded() {
+        finish();
     }
 }

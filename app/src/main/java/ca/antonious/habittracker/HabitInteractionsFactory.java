@@ -18,6 +18,10 @@ public class HabitInteractionsFactory {
         return new CompleteHabit(habitRepository);
     }
 
+    public AddHabit addHabit() {
+        return new AddHabit(habitRepository);
+    }
+
     public DeleteHabit deleteHabit() {
         return new DeleteHabit(habitRepository);
     }

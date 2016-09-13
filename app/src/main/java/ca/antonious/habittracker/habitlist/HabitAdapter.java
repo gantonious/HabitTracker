@@ -37,7 +37,7 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(HabitAdapter.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        
+
         Habit habit = get(position);
 
         if (habit.hasBeenCompletedToday()) {
