@@ -122,6 +122,13 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         habitCompletionAdapter.notifyDataSetChanged();
     }
 
+    private Comparator<HabitCompletion> reverseChronologicalHabitCompletionComparator  = new Comparator<HabitCompletion>() {
+        @Override
+        public int compare(HabitCompletion lhs, HabitCompletion rhs) {
+            return rhs.getCompletionTime().compareTo(lhs.getCompletionTime());
+        }
+    };
+
     private void onDelete() {
         createDeleteAlertDialog().show();
     }
@@ -175,11 +182,4 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
 
         return super.onOptionsItemSelected(item);
     }
-
-    private static Comparator<HabitCompletion> reverseChronologicalHabitCompletionComparator  = new Comparator<HabitCompletion>() {
-        @Override
-        public int compare(HabitCompletion lhs, HabitCompletion rhs) {
-            return rhs.getCompletionTime().compareTo(lhs.getCompletionTime());
-        }
-    };
 }
