@@ -22,7 +22,7 @@ public class RemoveCompletion {
         }
     }
 
-    public void removeCompletionFromHabit(Habit habit, String completionId) {
+    private void removeCompletionFromHabit(Habit habit, String completionId) {
         HabitCompletion habitCompletion = habit.getCompletion(completionId);
 
         if (habitCompletion != null) {
