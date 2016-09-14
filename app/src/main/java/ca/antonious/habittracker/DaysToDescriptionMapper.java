@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import ca.antonious.habittracker.models.Days;
-
 /**
  * Created by George on 2016-09-04.
  */
