@@ -12,6 +12,8 @@ import java.util.List;
 import ca.antonious.habittracker.habitstorage.HabitRepository;
 import ca.antonious.habittracker.habitstorage.IHabitService;
 import ca.antonious.habittracker.models.Habit;
+import ca.antonious.habittracker.observable.IObserver;
+import ca.antonious.habittracker.observable.TestObserver;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -108,11 +110,33 @@ public class HabitRepositoryTests {
     }
 
     @Test
+    public void test_removeHabit_emitsUpdatedListToObservers() {
+        TestObserver<List<Habit>> habitsObserver = new TestObserver<>();
+        habitRepository.addObserver(habitsObserver);
+
+        when(habitService.getHabits()).thenReturn(Arrays.asList(habit1, habit2, habit3));
+        habitRepository.removeHabit(habit1.getId());
+
+        habitsObserver.assertItemEmitted(Arrays.asList(habit3, habit2));
+    }
+
+    @Test
     public void test_addHabit_callsHabitServiceAddHabit() {
         when(habitService.getHabits()).thenReturn(Arrays.asList(habit1, habit2));
         habitRepository.addHabit(habit3);
 
         verify(habitService).addHabit(habit3);
+    }
+
+    @Test
+    public void test_addHabit_emitsUpdatedListToObservers() {
+        TestObserver<List<Habit>> habitsObserver = new TestObserver<>();
+        habitRepository.addObserver(habitsObserver);
+
+        when(habitService.getHabits()).thenReturn(Arrays.asList(habit1, habit2));
+        habitRepository.addHabit(habit3);
+
+        habitsObserver.assertItemEmitted(Arrays.asList(habit3, habit2, habit1));
     }
 
     @Test
@@ -122,4 +146,17 @@ public class HabitRepositoryTests {
 
         verify(habitService).updateHabit(updatedHabit2);
     }
+
+    @Test
+    public void test_updateHabit_emitsUpdatedListToObservers() {
+        TestObserver<List<Habit>> habitsObserver = new TestObserver<>();
+        habitRepository.addObserver(habitsObserver);
+
+        when(habitService.getHabits()).thenReturn(Arrays.asList(habit1, habit2));
+        habitRepository.updateHabit(updatedHabit2);
+
+        habitsObserver.assertItemEmitted(Arrays.asList(updatedHabit2, habit1));
+    }
+
+    // Add tests to ensure querying repo after adding/update/deleted reflects the new state
 }
