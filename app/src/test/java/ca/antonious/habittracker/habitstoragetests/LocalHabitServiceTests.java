@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.fileacess.IFileHandler;
-import ca.antonious.habittracker.habitstorage.HabitService;
+import ca.antonious.habittracker.habitstorage.LocalHabitService;
 import ca.antonious.habittracker.models.Habit;
 
 import org.junit.Before;
@@ -26,9 +26,9 @@ import static org.mockito.Mockito.*;
 /**
  * Created by George on 2016-09-13.
  */
-public class HabitServiceTests {
+public class LocalHabitServiceTests {
     private IFileHandler fileHandler;
-    private HabitService habitService;
+    private LocalHabitService localHabitService;
 
     private Habit habit1;
     private Habit habit2;
@@ -63,7 +63,7 @@ public class HabitServiceTests {
         habit3.setDaysToComplete(Arrays.asList(Calendar.SATURDAY, Calendar.WEDNESDAY));
 
         fileHandler = mock(IFileHandler.class);
-        habitService = new HabitService(fileHandler);
+        localHabitService = new LocalHabitService(fileHandler);
     }
 
     @Test
@@ -72,7 +72,7 @@ public class HabitServiceTests {
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(serializedHabits);
 
         List<Habit> expectedHabitList = Arrays.asList(habit1, habit2);
-        List<Habit> actualHabitList = habitService.getHabits();
+        List<Habit> actualHabitList = localHabitService.getHabits();
 
         assertEquals(expectedHabitList, actualHabitList);
     }
@@ -84,7 +84,7 @@ public class HabitServiceTests {
 
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
 
-        habitService.addHabit(habit3);
+        localHabitService.addHabit(habit3);
 
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
         verify(fileHandler).saveStringToFile(anyString(), stringCaptor.capture());
@@ -99,7 +99,7 @@ public class HabitServiceTests {
 
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
 
-        habitService.updateHabit(updatedHabit2);
+        localHabitService.updateHabit(updatedHabit2);
 
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
         verify(fileHandler).saveStringToFile(anyString(), stringCaptor.capture());
@@ -114,7 +114,7 @@ public class HabitServiceTests {
 
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
 
-        habitService.removeHabit(habit1.getId());
+        localHabitService.removeHabit(habit1.getId());
 
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
         verify(fileHandler).saveStringToFile(anyString(), stringCaptor.capture());
