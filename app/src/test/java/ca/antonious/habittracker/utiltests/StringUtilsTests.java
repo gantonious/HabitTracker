@@ -8,7 +8,7 @@ import ca.antonious.habittracker.utils.StringUtils;
 /**
  * Created by George on 2016-09-12.
  */
-public class StringUtilsTest {
+public class StringUtilsTests {
     @Test
     public void test_isStringNullOrEmpty_ifStringIsNull_thenReturnsTrue() {
         boolean expectedOutput = true;
