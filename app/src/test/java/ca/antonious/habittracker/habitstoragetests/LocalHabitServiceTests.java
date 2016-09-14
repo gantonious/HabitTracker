@@ -110,7 +110,7 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_addHabit_ifHabitDoesNotExist_thenSavesHabitAdded() {
+    public void test_addHabit_ifHabitDoesNotExist_thenSavesWithHabitAdded() {
         String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         String expectedSerializedMap = getSerializedHabitData(Arrays.asList(habit1, habit2, habit3));
 
@@ -134,7 +134,7 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_updateHabit_ifHabitExists_thenSavesHabitUpdated() {
+    public void test_updateHabit_ifHabitExists_thenSavesWithHabitUpdated() {
         String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         String expectedSerializedMap = getSerializedHabitData(Arrays.asList(habit1, updatedHabit2));
 
@@ -158,7 +158,7 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_removeHabit_ifHabitExists_thenSavesWithHabitDeleted() {
+    public void test_removeHabit_ifHabitExists_thenSavesWithHabitRemoved() {
         String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         String expectedSerializedMap = getSerializedHabitData(Arrays.asList(habit2));
 
