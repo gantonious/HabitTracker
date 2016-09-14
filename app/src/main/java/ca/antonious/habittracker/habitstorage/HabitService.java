@@ -1,6 +1,7 @@
 package ca.antonious.habittracker.habitstorage;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -58,12 +59,16 @@ public class HabitService implements IHabitService {
         if (StringUtils.isStringNullOrEmpty(serializedHabits)) {
             return new HashMap<>();
         } else {
-            return new Gson().fromJson(serializedHabits, new TypeToken<Map<String, Habit>>() {}.getType());
+            return getGson().fromJson(serializedHabits, new TypeToken<Map<String, Habit>>() {}.getType());
         }
     }
 
     private void saveHabits(Map<String, Habit> habitMap) {
-        String serializedHabits = new Gson().toJson(habitMap);
+        String serializedHabits = getGson().toJson(habitMap);
         fileHandler.saveStringToFile(Constants.HABIT_MAP_FILE_NAME, serializedHabits);
+    }
+
+    private Gson getGson() {
+        return new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
     }
 }
