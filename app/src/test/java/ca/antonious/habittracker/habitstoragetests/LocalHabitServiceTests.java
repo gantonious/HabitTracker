@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,7 +68,28 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_getHabits_thenReturnsDataFromFileHandler() {
+    public void test_getHabits_ifFileDoesNotExist_thenReturnsEmptyList() {
+        when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(null);
+
+        List<Habit> expectedHabitList = new ArrayList<>();
+        List<Habit> actualHabitList = localHabitService.getHabits();
+
+        assertEquals(expectedHabitList, actualHabitList);
+    }
+
+    @Test
+    public void test_getHabits_ifFileExistsButDataIsEmpty_thenReturnsEmptyList() {
+        String serializedHabits = getSerializedHabitData(new ArrayList<Habit>());
+        when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(serializedHabits);
+
+        List<Habit> expectedHabitList = new ArrayList<>();
+        List<Habit> actualHabitList = localHabitService.getHabits();
+
+        assertEquals(expectedHabitList, actualHabitList);
+    }
+
+    @Test
+    public void test_getHabits_ifFileExistsAndIsPopulatedWithData_thenReturnsDataFromFileHandler() {
         String serializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(serializedHabits);
 
@@ -78,12 +100,21 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_addHabit_savesHabitAdded() {
+    public void test_addHabit_ifHabitExists_thenNoInteractionsOccurWithTheFileHandler() {
+        String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
+
+        when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
+        localHabitService.addHabit(habit2);
+
+        verify(fileHandler, never()).saveStringToFile(anyString(), anyString());
+    }
+
+    @Test
+    public void test_addHabit_ifHabitDoesNotExist_thenSavesHabitAdded() {
         String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         String expectedSerializedMap = getSerializedHabitData(Arrays.asList(habit1, habit2, habit3));
 
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
-
         localHabitService.addHabit(habit3);
 
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
@@ -93,12 +124,21 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_updatedHabit_ifHabitExists_thenSavesHabitUpdated() {
+    public void test_updateHabit_ifHabitDoesNotExist_thenNoInteractionsOccurWithTheFileHandler() {
+        String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
+        when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
+
+        localHabitService.updateHabit(habit3);
+
+        verify(fileHandler, never()).saveStringToFile(anyString(), anyString());
+    }
+
+    @Test
+    public void test_updateHabit_ifHabitExists_thenSavesHabitUpdated() {
         String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         String expectedSerializedMap = getSerializedHabitData(Arrays.asList(habit1, updatedHabit2));
 
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
-
         localHabitService.updateHabit(updatedHabit2);
 
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
@@ -108,12 +148,21 @@ public class LocalHabitServiceTests {
     }
 
     @Test
-    public void test_deleteMethod_ifHabitExists_thenSavesWithHabitDeleted() {
+    public void test_removeHabit_ifHabitDoesNotExist_thenNoInteractionsOccurWithTheFileHandler() {
+        String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
+        when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
+
+        localHabitService.removeHabit(habit3.getId());
+
+        verify(fileHandler, never()).saveStringToFile(anyString(), anyString());
+    }
+
+    @Test
+    public void test_removeHabit_ifHabitExists_thenSavesWithHabitDeleted() {
         String baseSerializedHabits = getSerializedHabitData(Arrays.asList(habit1, habit2));
         String expectedSerializedMap = getSerializedHabitData(Arrays.asList(habit2));
 
         when(fileHandler.loadFileAsString(Constants.HABIT_MAP_FILE_NAME)).thenReturn(baseSerializedHabits);
-
         localHabitService.removeHabit(habit1.getId());
 
         ArgumentCaptor<String> stringCaptor = ArgumentCaptor.forClass(String.class);
