@@ -32,25 +32,31 @@ public class LocalHabitService implements IHabitService {
     @Override
     public void addHabit(Habit habit) {
         Map<String, Habit> habits = loadHabits();
-        habits.put(habit.getId(), habit);
 
-        saveHabits(habits);
+        if (!habits.containsKey(habit.getId())) {
+            habits.put(habit.getId(), habit);
+            saveHabits(habits);
+        }
     }
 
     @Override
     public void updateHabit(Habit habit) {
         Map<String, Habit> habits = loadHabits();
-        habits.put(habit.getId(), habit);
 
-        saveHabits(habits);
+        if (habits.containsKey(habit.getId())) {
+            habits.put(habit.getId(), habit);
+            saveHabits(habits);
+        }
     }
 
     @Override
     public void removeHabit(String id) {
         Map<String, Habit> habits = loadHabits();
-        habits.remove(id);
 
-        saveHabits(habits);
+        if (habits.containsKey(id)) {
+            habits.remove(id);
+            saveHabits(habits);
+        }
     }
 
     private Map<String, Habit> loadHabits() {
