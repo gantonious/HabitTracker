@@ -11,6 +11,7 @@ import ca.antonious.habittracker.habitstorage.IHabitRepository;
 import ca.antonious.habittracker.interactions.CompleteHabit;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
+import ca.antonious.habittracker.time.IClock;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.*;
  * Created by George on 2016-09-13.
  */
 public class CompleteHabitTests {
+    private IClock clock;
     private IHabitRepository habitRepository;
     private CompleteHabit completeHabit;
 
@@ -43,8 +45,9 @@ public class CompleteHabitTests {
         habitWithCompletion.setDaysToComplete(Arrays.asList(Calendar.SUNDAY));
         habitWithCompletion.setCompletions(Arrays.asList(habitCompletion));
 
+        clock = mock(IClock.class);
         habitRepository = mock(IHabitRepository.class);
-        completeHabit = new CompleteHabit(habitRepository);
+        completeHabit = new CompleteHabit(habitRepository, clock);
     }
 
     @Test

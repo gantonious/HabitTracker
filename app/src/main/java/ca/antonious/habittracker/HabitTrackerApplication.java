@@ -12,6 +12,7 @@ import ca.antonious.habittracker.habitstorage.LocalHabitService;
 import ca.antonious.habittracker.habitstorage.IHabitRepository;
 import ca.antonious.habittracker.habitstorage.IHabitService;
 import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
+import ca.antonious.habittracker.time.Clock;
 
 /**
  * Created by George on 2016-09-02.
@@ -40,7 +41,7 @@ public class HabitTrackerApplication extends Application {
 
     private void ensureHabitInteractionsFactory() {
         if (habitInteractionsFactory == null) {
-            habitInteractionsFactory = new HabitInteractionsFactory(getHabitRepository());
+            habitInteractionsFactory = new HabitInteractionsFactory(getHabitRepository(), new Clock());
         }
     }
 
