@@ -123,6 +123,50 @@ public class HabitTests {
     }
 
     @Test
+    public void test_getMissedDaysDescription_ifRequestedForSameDayAsCreationDate_thenReturnsNeverMissed() {
+        Date lowerBound = DateUtils.createDate(2016, 9, 18);
+        Date upperBound = DateUtils.createDate(2016, 9, 18, 17, 32, 7);
+
+        Habit habit = new Habit();
+        habit.setStartDate(lowerBound);
+        habit.setDaysToComplete(Arrays.asList(Calendar.SUNDAY,
+                                              Calendar.MONDAY,
+                                              Calendar.TUESDAY,
+                                              Calendar.WEDNESDAY,
+                                              Calendar.THURSDAY,
+                                              Calendar.FRIDAY,
+                                              Calendar.SATURDAY));
+
+        String expectedResult = "Never missed";
+        String actualResult = habit.getMissedDaysDescription(upperBound);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void test_getMissedDaysDescription_ifCompletedOnTheStartingDay_whenCalledTheNextDay_thenReturnsNeverMissed() {
+        Date lowerBound = DateUtils.createDate(2016, 9, 18, 18, 29, 0);
+        Date upperBound = DateUtils.createDate(2016, 9, 19, 17, 32, 7);
+
+        Habit habit = new Habit();
+        habit.setStartDate(lowerBound);
+        habit.setDaysToComplete(Arrays.asList(Calendar.SUNDAY,
+                                              Calendar.MONDAY,
+                                              Calendar.TUESDAY,
+                                              Calendar.WEDNESDAY,
+                                              Calendar.THURSDAY,
+                                              Calendar.FRIDAY,
+                                              Calendar.SATURDAY));
+
+        habit.setCompletions(Arrays.asList(new HabitCompletion(DateUtils.createDate(2016, 9 ,18, 19, 0, 0))));
+
+        String expectedResult = "Never missed";
+        String actualResult = habit.getMissedDaysDescription(upperBound);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
     public void test_getMissedDaysDescription_ifOneDayMissed_thenReturnsMissedOnce() {
         Date lowerBound = DateUtils.createDate(2016, 9, 18);
         Date upperBound = DateUtils.createDate(2016, 9, 25);

@@ -114,6 +114,10 @@ public class Habit {
     }
 
     private int getMissedDays(Date upperBound) {
+        if (startDate.compareTo(upperBound) > 0) {
+            return 0;
+        }
+
         Calendar iterationCalendar = Calendar.getInstance();
         iterationCalendar.setTime(startDate);
 
@@ -122,8 +126,8 @@ public class Habit {
 
         int totalDaysMissed = 0;
 
-        while (iterationCalendar.compareTo(endCalendar) < 0) {
-            if (!wasDateMissed(iterationCalendar)) {
+        while (!DateUtils.areOnTheSameDate(iterationCalendar.getTime(), endCalendar.getTime())) {
+            if (wasDateMissed(iterationCalendar)) {
                 totalDaysMissed++;
             }
             iterationCalendar.add(Calendar.DAY_OF_YEAR, 1);
@@ -134,7 +138,7 @@ public class Habit {
 
     private boolean wasDateMissed(Calendar calendar) {
         return getDaysToComplete().contains(calendar.get(Calendar.DAY_OF_WEEK)) &&
-                hasBeenCompletedOnDay(calendar.getTime());
+                !hasBeenCompletedOnDay(calendar.getTime());
     }
 
     @Override
