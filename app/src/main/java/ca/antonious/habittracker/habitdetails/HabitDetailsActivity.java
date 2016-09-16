@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import ca.antonious.habittracker.BaseActivity;
@@ -95,7 +96,7 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         habitDatesTextView.setText(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
         creationDateTextView.setText(habit.getStartingDateDescription());
         habitCompletionStatsDescription.setText(habit.getCompletionsDescription());
-        habitMissedCompletionsDescription.setText(habit.getMissedDaysDescription());
+        habitMissedCompletionsDescription.setText(habit.getMissedDaysDescription(new Date()));
         displayRecentCompletions(habit);
     }
 

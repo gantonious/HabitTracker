@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import ca.antonious.habittracker.utils.CalendarUtils;
 import ca.antonious.habittracker.utils.DateUtils;
 import ca.antonious.habittracker.utils.Utils;
 
@@ -68,6 +67,10 @@ public class Habit {
         return null;
     }
 
+    public void addCompletion(HabitCompletion habitCompletion) {
+        this.completions.add(habitCompletion);
+    }
+
     public List<Integer> getDaysToComplete() {
         return daysToComplete;
     }
@@ -76,9 +79,9 @@ public class Habit {
         this.daysToComplete = daysToComplete;
     }
 
-    public boolean hasBeenCompletedToday() {
+    public boolean hasBeenCompletedOnDay(Date date) {
         for (HabitCompletion completion: completions) {
-            if (DateUtils.areOnTheSameDate(completion.getCompletionTime(), new Date())) {
+            if (DateUtils.areOnTheSameDate(completion.getCompletionTime(), date)) {
                 return true;
             }
         }
@@ -99,8 +102,8 @@ public class Habit {
         return "Never completed";
     }
 
-    public String getMissedDaysDescription() {
-        int missedDays = getMissedDays();
+    public String getMissedDaysDescription(Date upperBound) {
+        int missedDays = getMissedDays(upperBound);
 
         if (missedDays > 1) {
             return String.format("Missed %d times", missedDays);
@@ -110,14 +113,28 @@ public class Habit {
         return "Never missed";
     }
 
-    public int getMissedDays() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -1);
+    private int getMissedDays(Date upperBound) {
+        Calendar iterationCalendar = Calendar.getInstance();
+        iterationCalendar.setTime(startDate);
 
-        Calendar startingDate = Calendar.getInstance();
-        startingDate.setTime(getStartDate());
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(upperBound);
 
-        return CalendarUtils.getDaysBetween(startingDate, calendar, getDaysToComplete());
+        int totalDaysMissed = 0;
+
+        while (iterationCalendar.compareTo(endCalendar) < 0) {
+            if (!wasDateMissed(iterationCalendar)) {
+                totalDaysMissed++;
+            }
+            iterationCalendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
+        return totalDaysMissed;
+    }
+
+    private boolean wasDateMissed(Calendar calendar) {
+        return getDaysToComplete().contains(calendar.get(Calendar.DAY_OF_WEEK)) &&
+                hasBeenCompletedOnDay(calendar.getTime());
     }
 
     @Override

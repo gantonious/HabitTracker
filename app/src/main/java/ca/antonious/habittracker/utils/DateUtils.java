@@ -17,4 +17,11 @@ public class DateUtils {
         return rightCalendar.get(Calendar.DAY_OF_YEAR) == leftCalendar.get(Calendar.DAY_OF_YEAR) &&
                rightCalendar.get(Calendar.YEAR) == leftCalendar.get(Calendar.YEAR);
     }
+
+    public static Date createDate(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+
+        return calendar.getTime();
+    }
 }

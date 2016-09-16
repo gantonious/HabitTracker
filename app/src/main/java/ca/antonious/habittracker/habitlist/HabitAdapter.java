@@ -40,7 +40,7 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
 
         Habit habit = get(position);
 
-        if (habit.hasBeenCompletedToday()) {
+        if (habit.hasBeenCompletedOnDay(new Date())) {
             holder.setCompleted();
         } else {
             holder.setNotCompleted();
