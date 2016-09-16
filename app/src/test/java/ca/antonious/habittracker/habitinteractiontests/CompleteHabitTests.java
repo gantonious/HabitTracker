@@ -2,6 +2,7 @@ package ca.antonious.habittracker.habitinteractiontests;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -53,6 +54,7 @@ public class CompleteHabitTests {
     @Test
     public void test_complete_ifHabitDoesNotExist_thenNoRepositoryUpdatesOccurs() {
         when(habitRepository.getHabit("Habit-ID")).thenReturn(null);
+
         completeHabit.complete("Habit-ID");
 
         verify(habitRepository, never()).updateHabit(any(Habit.class));
@@ -60,6 +62,22 @@ public class CompleteHabitTests {
 
     @Test
     public void test_complete_ifHabitExists_thenUpdateIsCalledWithCompletionAdded() {
-        fail();
+        when(habitRepository.getHabit("Habit-ID")).thenReturn(habitWithoutCompletion);
+        when(clock.getCurrentDate()).thenReturn(new Date(1));
+
+        completeHabit.complete("Habit-ID");
+
+        ArgumentCaptor<Habit> habitCaptor = ArgumentCaptor.forClass(Habit.class);
+        verify(habitRepository).updateHabit(habitCaptor.capture());
+
+        Habit habit = habitCaptor.getValue();
+
+        HabitCompletion expectedCompletion = habitWithCompletion.getCompletions().get(0);
+        HabitCompletion actualCompletion = habit.getCompletions().get(0);
+
+        assertEquals(habit.getName(), habitWithCompletion.getName());
+        assertEquals(habit.getStartDate(), habitWithCompletion.getStartDate());
+
+        assertEquals(expectedCompletion.getCompletionTime(), actualCompletion.getCompletionTime());
     }
 }
