@@ -1,7 +1,6 @@
 .DS_Store
 
 # Built application files
-*.apk
 *.ap_
 
 # Files for the Dalvik VM
@@ -10,8 +9,7 @@
 # Java class files
 *.class
 
-# Generated files
-bin/
+# Generated filesdfaef
 gen/
 
 # Gradle files
