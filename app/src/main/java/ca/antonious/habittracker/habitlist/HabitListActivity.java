@@ -21,7 +21,7 @@ import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
 import ca.antonious.habittracker.models.Habit;
 
 public class HabitListActivity extends BaseActivity implements IHabitListView {
-    private FloatingActionButton fab;
+    private FloatingActionButton addHabitButton;
     private TextView emptyHabitsTextView;
     private RecyclerView habitRecyclerView;
     private HabitAdapter habitAdapter = new HabitAdapter();
@@ -52,7 +52,7 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
     }
 
     private void bindViews() {
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        addHabitButton = (FloatingActionButton) findViewById(R.id.fab);
         emptyHabitsTextView = (TextView) findViewById(R.id.empty_habits_view);
         habitRecyclerView = (RecyclerView) findViewById(R.id.habit_recycler_view);
     }
@@ -67,7 +67,7 @@ public class HabitListActivity extends BaseActivity implements IHabitListView {
     }
 
     private void handleAddButtonClicks() {
-        fab.setOnClickListener(new View.OnClickListener() {
+        addHabitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HabitListActivity.this, AddHabitActivity.class));
