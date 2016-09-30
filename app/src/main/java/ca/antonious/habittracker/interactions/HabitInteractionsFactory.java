@@ -5,6 +5,12 @@ import ca.antonious.habittracker.time.IClock;
 
 /**
  * Created by George on 2016-09-04.
+ *
+ * An interaction is a class that is concerned with handling a specific type of
+ * model interaction (eg. completing a habit)
+ *
+ * This factory provides ways to construct all interactions and injects the required
+ * dependencies into them so that users do not need to manually resolve dependencies.
  */
 public class HabitInteractionsFactory {
     private IClock clock;

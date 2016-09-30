@@ -12,6 +12,9 @@ import ca.antonious.habittracker.utils.Utils;
 
 /**
  * Created by George on 2016-09-01.
+ *
+ * The model for a Habit, exposes 'description' methods that provide data about the habit
+ * in a human readable way
  */
 public class Habit {
     private String id;

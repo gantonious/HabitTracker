@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 
 /**
  * Created by George on 2016-09-01.
+ *
+ * AndroidFileHandler is an implementation of IFileHandler and knows how to
+ * read/write files in an android environment
  */
 public class AndroidFileHandler implements IFileHandler {
     private Context context;

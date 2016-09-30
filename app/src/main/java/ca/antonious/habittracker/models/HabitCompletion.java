@@ -7,6 +7,8 @@ import ca.antonious.habittracker.utils.Utils;
 
 /**
  * Created by George on 2016-09-01.
+ *
+ * This is generated whenever a user completes a habit
  */
 public class HabitCompletion {
     private String id;

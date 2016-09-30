@@ -9,6 +9,8 @@ import ca.antonious.habittracker.time.IClock;
 
 /**
  * Created by George on 2016-09-03.
+ *
+ * Exposes a method to complete a habit if it exists
  */
 public class CompleteHabit {
     private IClock clock;

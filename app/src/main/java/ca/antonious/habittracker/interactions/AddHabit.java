@@ -8,6 +8,8 @@ import ca.antonious.habittracker.models.Habit;
 
 /**
  * Created by George on 2016-09-12.
+ *
+ * Exposes a method to create a new Habit in the System
  */
 public class AddHabit {
     private IHabitRepository habitRepository;

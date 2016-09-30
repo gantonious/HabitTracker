@@ -16,6 +16,9 @@ import ca.antonious.habittracker.models.Habit;
 
 /**
  * Created by George on 2016-09-01.
+ *
+ * Implements IHabitService and provides CRUD methods for habits stored locally
+ * on the device
  */
 public class LocalHabitService implements IHabitService {
     private IFileHandler fileHandler;

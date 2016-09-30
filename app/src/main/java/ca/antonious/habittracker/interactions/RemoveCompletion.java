@@ -6,6 +6,8 @@ import ca.antonious.habittracker.models.HabitCompletion;
 
 /**
  * Created by George on 2016-09-04.
+ *
+ * Exposes a method to remove a habit completion if it exists
  */
 public class RemoveCompletion {
     private IHabitRepository habitRepository;

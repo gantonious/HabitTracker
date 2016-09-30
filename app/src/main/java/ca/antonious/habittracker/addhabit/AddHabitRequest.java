@@ -5,6 +5,9 @@ import java.util.List;
 
 /**
  * Created by George on 2016-09-12.
+ *
+ * An object that encapsulates all the components required to
+ * create a new habit
  */
 public class AddHabitRequest {
     private String name;

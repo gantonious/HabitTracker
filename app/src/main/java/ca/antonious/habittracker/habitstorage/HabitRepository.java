@@ -14,6 +14,9 @@ import ca.antonious.habittracker.observable.IObserver;
 
 /**
  * Created by George on 2016-09-02.
+ *
+ * HabitRepository implements IHabitRepository and provides an in memory store
+ * of habits. It utilizes an IHabitService to handle the task of data persistence.
  */
 public class HabitRepository implements IHabitRepository {
     private IHabitService habitService;

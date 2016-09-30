@@ -10,6 +10,11 @@ import ca.antonious.habittracker.observable.IObserver;
 
 /**
  * Created by George on 2016-09-04.
+ *
+ * HabitDetailsController is an implementation of IController that controls
+ * an IHabitDetailsView. It exposes methods to delete a habit, complete a habit,
+ * and remove completions from a habit. It also notified the view when the habit
+ * being rendered has been updated.
  */
 public class HabitDetailsController implements IController<IHabitDetailsView> {
     private String habitId;

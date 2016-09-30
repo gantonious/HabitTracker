@@ -5,6 +5,10 @@ import ca.antonious.habittracker.IController;
 
 /**
  * Created by George on 2016-09-04.
+ *
+ * AddHabitController is an implementation of IController that controls
+ * an IAddHabitView. It exposes a method to add a habit, and notifies the view
+ * if the habit has been successfully added
  */
 public class AddHabitController implements IController<IAddHabitView> {
     private IAddHabitView addHabitView;
