@@ -31,6 +31,7 @@
             android:textColor="@color/colorAccent"
             android:fontFamily="sans-serif-medium"
             android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/completion_indicator"
             android:layout_below="@id/habit_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
