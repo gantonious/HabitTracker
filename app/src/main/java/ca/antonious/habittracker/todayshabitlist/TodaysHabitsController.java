@@ -12,6 +12,10 @@ import ca.antonious.habittracker.observable.IObserver;
 
 /**
  * Created by George on 2016-09-30.
+ *
+ * TodaysHabitsController is an implementation of IController that controls
+ * an ITodaysHabitsView. It exposes a method to complete a habit, and notifies the view
+ * when the habit list has changed
  */
 
 public class TodaysHabitsController implements IController<ITodaysHabitsView> {

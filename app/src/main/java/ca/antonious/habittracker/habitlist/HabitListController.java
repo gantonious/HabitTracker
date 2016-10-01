@@ -10,6 +10,10 @@ import ca.antonious.habittracker.observable.IObserver;
 
 /**
  * Created by George on 2016-09-03.
+ *
+ * HabitListController is an implementation of IController that controls
+ * an IHabitListView. It exposes a method to complete a habit, and notifies the view
+ * when the habit list has changed
  */
 public class HabitListController implements IController<IHabitListView> {
     private IHabitListView habitListView;
