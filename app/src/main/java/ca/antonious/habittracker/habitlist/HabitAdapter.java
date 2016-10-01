@@ -46,6 +46,12 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
             holder.setNotCompleted();
         }
 
+        if (habit.shouldBeCompletedOnDay(new Date())) {
+            holder.enableCompletion();
+        } else {
+            holder.disableCompletion();
+        }
+
         holder.setTitle(habit.getName());
         holder.setDatesDescription(new DaysToDescriptionMapper().map(habit.getDaysToComplete()));
         holder.setOnCompleteClickedListener(handleCompletionClick(habit, position));
@@ -91,13 +97,20 @@ public class HabitAdapter extends ArrayAdapter<Habit, HabitAdapter.ViewHolder> {
             completeButton.setOnClickListener(onClickListener);
         }
 
-
         public void setCompleted() {
             completionIndicator.setVisibility(View.VISIBLE);
         }
 
         public void setNotCompleted() {
             completionIndicator.setVisibility(View.GONE);
+        }
+
+        public void enableCompletion() {
+            completeButton.setVisibility(View.VISIBLE);
+        }
+
+        public void disableCompletion() {
+            completeButton.setVisibility(View.GONE);
         }
 
         @Override

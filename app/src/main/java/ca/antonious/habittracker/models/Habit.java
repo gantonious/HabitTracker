@@ -91,6 +91,13 @@ public class Habit {
         return false;
     }
 
+    public boolean shouldBeCompletedOnDay(Date date) {
+        Calendar dateCalendar = Calendar.getInstance();
+        dateCalendar.setTime(date);
+
+        return daysToComplete.contains(dateCalendar.get(Calendar.DAY_OF_WEEK));
+    }
+
     public String getStartingDateDescription() {
         SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
         return "Started on " + humanReadableDateFormat.format(getStartDate());

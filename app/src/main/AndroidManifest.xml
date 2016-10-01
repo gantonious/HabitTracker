@@ -13,19 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".habitlist.HabitListActivity"
-            android:label="@string/habit_list_activity_title" >
+            android:name=".addhabit.AddHabitActivity"
+            android:label="@string/add_habit_activity_title" />
+        <activity
+            android:name=".habitdetails.HabitDetailsActivity"
+            android:label="@string/habit_details_activity_title" />
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/habit_list_activity_title"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".addhabit.AddHabitActivity"
-            android:label="@string/add_habit_activity_title" />
-        <activity
-            android:name=".habitdetails.HabitDetailsActivity"
-            android:label="@string/habit_details_activity_title"/>
     </application>
 
 </manifest>

@@ -13,6 +13,7 @@ import ca.antonious.habittracker.habitstorage.IHabitRepository;
 import ca.antonious.habittracker.habitstorage.IHabitService;
 import ca.antonious.habittracker.interactions.HabitInteractionsFactory;
 import ca.antonious.habittracker.time.Clock;
+import ca.antonious.habittracker.todayshabitlist.TodaysHabitsController;
 
 /**
  * Created by George on 2016-09-02.
@@ -47,6 +48,10 @@ public class HabitTrackerApplication extends Application {
 
     public HabitListController getHabitListController() {
         return new HabitListController(getHabitRepository(), getHabitInteractionsFactory());
+    }
+
+    public TodaysHabitsController getTodaysHabitsController() {
+        return new TodaysHabitsController(getHabitRepository(), getHabitInteractionsFactory());
     }
 
     public HabitDetailsController getHabitDetailsController(String habitId) {
