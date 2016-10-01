@@ -74,13 +74,38 @@ public class HabitTests {
         assertEquals(expectedResult, actualResult);
     }
 
-
     @Test
     public void test_hadBeenCompletedOnDay_ifHasNotBeenCompletedOnDaySpecified_thenReturnsFalse() {
         Habit habit = new Habit();
 
         boolean expectedResult = false;
         boolean actualResult = habit.hasBeenCompletedOnDay(new Date());
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void test_shouldBeCompleted_ifDayOfTheWeekNotInDaysToComplete_thenReturnsFalse() {
+        Habit habit = new Habit();
+        habit.setDaysToComplete(Arrays.asList(Calendar.MONDAY, Calendar.THURSDAY));
+
+        Date dayOnTuesday = DateUtils.createDate(2016, 10, 4);
+
+        boolean expectedResult = false;
+        boolean actualResult = habit.shouldBeCompletedOnDay(dayOnTuesday);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void test_shouldBeCompleted_ifDayOfTheWeekIsInDaysToComplete_thenReturnsTrue() {
+        Habit habit = new Habit();
+        habit.setDaysToComplete(Arrays.asList(Calendar.MONDAY, Calendar.THURSDAY));
+
+        Date dayOnTuesday = DateUtils.createDate(2016, 10, 3);
+
+        boolean expectedResult = true;
+        boolean actualResult = habit.shouldBeCompletedOnDay(dayOnTuesday);
 
         assertEquals(expectedResult, actualResult);
     }
