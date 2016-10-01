@@ -5,5 +5,8 @@
     <string name="add_habit_activity_title">Create Habit</string>
     <string name="habit_details_activity_title">Habit Details</string>
 
+    <string name="todays_habits_tab_name">Today</string>
+    <string name="all_habits_tab_name">All habits</string>
+
     <string name="action_settings">Settings</string>
 </resources>
