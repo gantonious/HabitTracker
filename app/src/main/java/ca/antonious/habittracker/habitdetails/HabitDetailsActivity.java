@@ -98,15 +98,6 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         habitCompletionStatsDescription.setText(habit.getCompletionsDescription());
         habitMissedCompletionsDescription.setText(habit.getMissedDaysDescription(new Date()));
         displayRecentCompletions(habit);
-        handleCompletion(habit);
-    }
-
-    private void handleCompletion(Habit habit) {
-        if (habit.shouldBeCompletedOnDay(new Date())) {
-            completeHabitButton.setVisibility(View.VISIBLE);
-        } else {
-            completeHabitButton.setVisibility(View.GONE);
-        }
     }
 
     private void displayRecentCompletions(Habit habit) {
