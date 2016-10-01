@@ -2,7 +2,6 @@ package ca.antonious.habittracker.todayshabitlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,11 +15,8 @@ import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseFragment;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.R;
-import ca.antonious.habittracker.addhabit.AddHabitActivity;
 import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
 import ca.antonious.habittracker.habitlist.HabitAdapter;
-import ca.antonious.habittracker.habitlist.HabitListController;
-import ca.antonious.habittracker.habitlist.HabitListFragment;
 import ca.antonious.habittracker.models.Habit;
 
 /**
@@ -54,12 +50,12 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
     }
 
     private void handleCompleteClicks() {
-        /*habitAdapter.setOnCompleteClickedListener(new HabitAdapter.OnCompleteClickedListener() {
+        habitAdapter.setOnCompleteClickedListener(new HabitAdapter.OnCompleteClickedListener() {
             @Override
             public void onComplete(Habit habit, int position) {
                 controller.markHabitAsCompleted(habit.getId());
             }
-        });*/
+        });
     }
 
     private void bindViews(View view) {

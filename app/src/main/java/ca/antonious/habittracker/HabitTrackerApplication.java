@@ -51,7 +51,7 @@ public class HabitTrackerApplication extends Application {
     }
 
     public TodaysHabitsController getTodaysHabitsController() {
-        return new TodaysHabitsController(getHabitRepository());
+        return new TodaysHabitsController(getHabitRepository(), getHabitInteractionsFactory());
     }
 
     public HabitDetailsController getHabitDetailsController(String habitId) {
