@@ -2,7 +2,6 @@ package ca.antonious.habittracker.habitlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseFragment;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.R;
-import ca.antonious.habittracker.addhabit.AddHabitActivity;
 import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
 import ca.antonious.habittracker.models.Habit;
 
@@ -42,7 +40,6 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
         resolveDependencies();
         setUpRecyclerView();
 
-        handleAddButtonClicks();
         handleListItemClicks();
         handleCompleteClicks();
 
@@ -59,7 +56,6 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
     }
 
     private void bindViews(View view) {
-        //addHabitButton = (FloatingActionButton) findViewById(R.id.fab);
         emptyHabitsTextView = (TextView) view.findViewById(R.id.empty_habits_view);
         habitRecyclerView = (RecyclerView) view.findViewById(R.id.habit_recycler_view);
     }
@@ -71,15 +67,6 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
     private void setUpRecyclerView() {
         habitRecyclerView.setAdapter(habitAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-    }
-
-    private void handleAddButtonClicks() {
-        /*addHabitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HabitListActivity.this, AddHabitActivity.class));
-            }
-        });*/
     }
 
     private void handleListItemClicks() {

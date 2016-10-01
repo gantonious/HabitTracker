@@ -42,7 +42,6 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
         resolveDependencies();
         setUpRecyclerView();
 
-        handleAddButtonClicks();
         handleListItemClicks();
         handleCompleteClicks();
 
@@ -59,7 +58,6 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
     }
 
     private void bindViews(View view) {
-        //addHabitButton = (FloatingActionButton) findViewById(R.id.fab);
         emptyHabitsTextView = (TextView) view.findViewById(R.id.empty_habits_view);
         habitRecyclerView = (RecyclerView) view.findViewById(R.id.habit_recycler_view);
     }
@@ -71,15 +69,6 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
     private void setUpRecyclerView() {
         habitRecyclerView.setAdapter(habitAdapter);
         habitRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-    }
-
-    private void handleAddButtonClicks() {
-        /*addHabitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HabitListActivity.this, AddHabitActivity.class));
-            }
-        });*/
     }
 
     private void handleListItemClicks() {
