@@ -15,6 +15,7 @@ import android.view.View;
 
 import ca.antonious.habittracker.addhabit.AddHabitActivity;
 import ca.antonious.habittracker.habitlist.HabitListFragment;
+import ca.antonious.habittracker.todayshabitlist.TodaysHabitsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0: return HabitListFragment.newInstance();
+                case 0: return TodaysHabitsFragment.newInstance();
                 case 1: return HabitListFragment.newInstance();
                 default: return null;
             }
