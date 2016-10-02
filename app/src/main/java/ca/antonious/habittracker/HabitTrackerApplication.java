@@ -17,6 +17,10 @@ import ca.antonious.habittracker.todayshabitlist.TodaysHabitsController;
 
 /**
  * Created by George on 2016-09-02.
+ *
+ * This class exposes dependencies to the rest of the system. It takes
+ * care of the lifetime for each dependency, so all the consumers
+ * need to care about is what dependency they need.
  */
 public class HabitTrackerApplication extends Application {
     private IHabitRepository habitRepository;
