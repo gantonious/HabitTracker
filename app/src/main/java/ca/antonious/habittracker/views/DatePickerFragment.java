@@ -10,6 +10,8 @@ import java.util.Calendar;
 
 /**
  * Created by George on 2016-09-03.
+ *
+ * Used this tutorial: https://developer.android.com/guide/topics/ui/controls/pickers.html
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private DatePickerDialog.OnDateSetListener dateSetListener;
