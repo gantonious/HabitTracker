@@ -112,7 +112,7 @@ public class AddHabitActivity extends BaseActivity implements IAddHabitView {
     private void setStartingDate(Date date) {
         startingDate = date;
 
-        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        SimpleDateFormat humanReadableDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = humanReadableDateFormat.format(date);
         startingDateOption.setPreviewText(formattedDate);
     }

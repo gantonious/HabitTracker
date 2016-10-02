@@ -157,6 +157,4 @@ public class HabitRepositoryTests {
 
         habitsObserver.assertItemEmitted(Arrays.asList(updatedHabit2, habit1));
     }
-
-    // Add tests to ensure querying repo after adding/update/deleted reflects the new state
 }
