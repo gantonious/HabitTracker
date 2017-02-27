@@ -9,23 +9,11 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".habitlist.HabitListActivity"
-    tools:showIn="@layout/activity_all_habits"
     android:animateLayoutChanges="true">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/habit_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/empty_habits_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="16dp"
-        android:fontFamily="sans-serif-medium"
-        android:visibility="gone"
-        android:text="Seems like you have no habits for today"/>
 
 </RelativeLayout>

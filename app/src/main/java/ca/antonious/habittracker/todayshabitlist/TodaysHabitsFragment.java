@@ -7,26 +7,29 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
-import ca.antonious.habittracker.ArrayAdapter;
 import ca.antonious.habittracker.BaseFragment;
 import ca.antonious.habittracker.Constants;
 import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.habitdetails.HabitDetailsActivity;
-import ca.antonious.habittracker.habitlist.HabitAdapter;
 import ca.antonious.habittracker.models.Habit;
+import ca.antonious.habittracker.viewcells.EmptyViewCell;
+import ca.antonious.habittracker.viewcells.HabitViewCell;
+import ca.antonious.viewcelladapter.ViewCellAdapter;
+import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
+import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
 /**
  * Created by George on 2016-09-30.
  */
 
 public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsView {
-    private TextView emptyHabitsTextView;
     private RecyclerView habitRecyclerView;
-    private HabitAdapter habitAdapter = new HabitAdapter();
+
+    private HomogeneousSection<Habit, HabitViewCell> habitsSection;
+    private ViewCellAdapter viewCellAdapter;
 
     private TodaysHabitsController controller;
 
@@ -42,23 +45,10 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
         resolveDependencies();
         setUpRecyclerView();
 
-        handleListItemClicks();
-        handleCompleteClicks();
-
         return view;
     }
 
-    private void handleCompleteClicks() {
-        habitAdapter.setOnCompleteClickedListener(new HabitAdapter.OnCompleteClickedListener() {
-            @Override
-            public void onComplete(Habit habit, int position) {
-                controller.markHabitAsCompleted(habit.getId());
-            }
-        });
-    }
-
     private void bindViews(View view) {
-        emptyHabitsTextView = (TextView) view.findViewById(R.id.empty_habits_view);
         habitRecyclerView = (RecyclerView) view.findViewById(R.id.habit_recycler_view);
     }
 
@@ -67,17 +57,30 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
     }
 
     private void setUpRecyclerView() {
-        habitRecyclerView.setAdapter(habitAdapter);
-        habitRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-    }
+        habitsSection = new HomogeneousSection<>(Habit.class, HabitViewCell.class);
 
-    private void handleListItemClicks() {
-        habitAdapter.setItemClickedListener(new ArrayAdapter.ItemClickedListener<Habit>() {
+        EmptyViewCell emptyViewCell = new EmptyViewCell("Seems like you have no habits for today");
+        EmptySectionDecorator habitsSectionWithEmptyView = new EmptySectionDecorator(habitsSection, emptyViewCell);
+
+        viewCellAdapter = new ViewCellAdapter();
+        viewCellAdapter.add(habitsSectionWithEmptyView);
+
+        viewCellAdapter.addListener(new HabitViewCell.OnHabitClickedListener() {
             @Override
-            public void onItemClicked(Habit item, int position) {
-                navigateToDetails(item.getId());
+            public void onHabitClicked(Habit habit, int position) {
+                navigateToDetails(habit.getId());
             }
         });
+
+        viewCellAdapter.addListener(new HabitViewCell.OnCompleteClickedListener() {
+            @Override
+            public void onComplete(Habit habit, int position) {
+                controller.markHabitAsCompleted(habit.getId());
+            }
+        });
+
+        habitRecyclerView.setAdapter(viewCellAdapter);
+        habitRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     private void navigateToDetails(String habitID) {
@@ -101,24 +104,7 @@ public class TodaysHabitsFragment extends BaseFragment implements ITodaysHabitsV
 
     @Override
     public void displayTodaysHabits(List<Habit> habits) {
-        if (habits.isEmpty()) {
-            displayNoHabitsMessage();
-        } else {
-            displayHabitsList(habits);
-        }
-    }
-
-    private void displayNoHabitsMessage() {
-        habitAdapter.clear();
-        habitAdapter.notifyDataSetChanged();
-
-        emptyHabitsTextView.setVisibility(View.VISIBLE);
-    }
-
-    private void displayHabitsList(List<Habit> habits) {
-        emptyHabitsTextView.setVisibility(View.GONE);
-
-        habitAdapter.setAll(habits);
-        habitAdapter.notifyDataSetChanged();
+        habitsSection.setAll(habits);
+        viewCellAdapter.notifyDataSetChanged();
     }
 }
