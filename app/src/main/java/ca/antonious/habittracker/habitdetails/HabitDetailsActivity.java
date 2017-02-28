@@ -11,11 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 
 import ca.antonious.habittracker.BaseActivity;
 import ca.antonious.habittracker.Constants;
@@ -24,10 +21,8 @@ import ca.antonious.habittracker.R;
 import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
 import ca.antonious.habittracker.viewcells.HabitCompletionViewCell;
-import ca.antonious.habittracker.viewcells.HeaderViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
 import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
-import ca.antonious.viewcelladapter.decorators.HeaderSectionDecorator;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 import ca.antonious.viewcelladapter.viewcells.StaticViewCell;
 
