@@ -63,6 +63,7 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
         EmptySectionDecorator habitsSectionWithEmptyView = new EmptySectionDecorator(habitsSection, emptyViewCell);
 
         viewCellAdapter = new ViewCellAdapter();
+        viewCellAdapter.setHasStableIds(true);
         viewCellAdapter.add(habitsSectionWithEmptyView);
 
         viewCellAdapter.addListener(new HabitViewCell.OnHabitClickedListener() {
