@@ -22,9 +22,9 @@ import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.models.HabitCompletion;
 import ca.antonious.habittracker.viewcells.HabitCompletionViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
-import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
-import ca.antonious.viewcelladapter.viewcells.StaticViewCell;
+import ca.antonious.viewcelladapter.viewcells.builtins.StaticViewCell;
 
 public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsView {
     private TextView titleTextView;
@@ -32,12 +32,10 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
     private TextView habitDatesTextView;
     private TextView habitCompletionStatsDescription;
     private TextView habitMissedCompletionsDescription;
-    private TextView emptyRecentHabitCompletionsMessages;
     private Button completeHabitButton;
 
     private RecyclerView completionsRecyclerView;
 
-    private ViewCellAdapter viewCellAdapter;
     private HomogeneousSection<HabitCompletion, HabitCompletionViewCell> habitCompletionsSection;
 
     private HabitDetailsController habitDetailsController;
@@ -49,8 +47,10 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
 
         bindViews();
         resolveDependencies();
-        setUpRecyclerView();
         handleCompleteButtonClicks();
+
+        completionsRecyclerView.setAdapter(getViewCellAdapter());
+        completionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void bindViews() {
@@ -60,7 +60,6 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         completionsRecyclerView = (RecyclerView) findViewById(R.id.habit_details_recent_completions_list);
         habitCompletionStatsDescription = (TextView) findViewById(R.id.habit_details_total_completions);
         habitMissedCompletionsDescription = (TextView) findViewById(R.id.habit_details_total_missed_completions);
-        emptyRecentHabitCompletionsMessages = (TextView) findViewById(R.id.habit_details_empty_completions);
         completeHabitButton = (Button) findViewById(R.id.habit_details_complete_button);
     }
 
@@ -69,32 +68,28 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
         habitDetailsController = getHabitTrackerApplication().getHabitDetailsController(id);
     }
 
-    private void setUpRecyclerView() {
+    private ViewCellAdapter getViewCellAdapter() {
         habitCompletionsSection = new HomogeneousSection<>(HabitCompletion.class, HabitCompletionViewCell.class);
 
-        habitCompletionsSection.setModelComparator(new Comparator<HabitCompletion>() {
-            @Override
-            public int compare(HabitCompletion lhs, HabitCompletion rhs) {
-                return  rhs.getCompletionTime().compareTo(lhs.getCompletionTime());
-            }
-        });
-
-        StaticViewCell habitCompletionsEmptyView = new StaticViewCell(R.layout.completions_empty_view);
-        EmptySectionDecorator habitCompletionsWithEmptyView = new EmptySectionDecorator(habitCompletionsSection, habitCompletionsEmptyView);
-
-        viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-        viewCellAdapter.add(habitCompletionsWithEmptyView);
-
-        viewCellAdapter.addListener(new HabitCompletionViewCell.OnCompletionRemovedListener() {
-            @Override
-            public void onCompletionRemoved(HabitCompletion habitCompletion, int position) {
-                habitDetailsController.removeHabitCompletion(habitCompletion.getId());
-            }
-        });
-
-        completionsRecyclerView.setAdapter(viewCellAdapter);
-        completionsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        return ViewCellAdapter.create()
+            .section(
+                SectionBuilder.wrap(habitCompletionsSection)
+                    .withComparator(new Comparator<HabitCompletion>() {
+                        @Override
+                        public int compare(HabitCompletion lhs, HabitCompletion rhs) {
+                            return rhs.getCompletionTime().compareTo(lhs.getCompletionTime());
+                        }
+                    })
+                    .showIfEmpty(new StaticViewCell(R.layout.completions_empty_view))
+                    .build()
+            )
+            .listener(new HabitCompletionViewCell.OnCompletionRemovedListener() {
+                @Override
+                public void onCompletionRemoved(HabitCompletion habitCompletion, int position) {
+                    habitDetailsController.removeHabitCompletion(habitCompletion.getId());
+                }
+            })
+            .build();
     }
 
     private void handleCompleteButtonClicks() {
@@ -118,7 +113,6 @@ public class HabitDetailsActivity extends BaseActivity implements IHabitDetailsV
 
     private void displayRecentCompletions(Habit habit) {
         habitCompletionsSection.setAll(habit.getCompletions());
-        viewCellAdapter.notifyDataSetChanged();
     }
 
     private void onDelete() {

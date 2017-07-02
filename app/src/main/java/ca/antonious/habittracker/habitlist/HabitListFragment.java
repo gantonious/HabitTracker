@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ import ca.antonious.habittracker.models.Habit;
 import ca.antonious.habittracker.viewcells.EmptyViewCell;
 import ca.antonious.habittracker.viewcells.HabitViewCell;
 import ca.antonious.viewcelladapter.ViewCellAdapter;
-import ca.antonious.viewcelladapter.decorators.EmptySectionDecorator;
+import ca.antonious.viewcelladapter.construction.SectionBuilder;
 import ca.antonious.viewcelladapter.sections.HomogeneousSection;
 
 /**
@@ -30,9 +29,8 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
     private RecyclerView habitRecyclerView;
 
     private HomogeneousSection<Habit, HabitViewCell> habitsSection;
-    private ViewCellAdapter viewCellAdapter;
-
     private HabitListController controller;
+
     public static HabitListFragment newInstance() {
         return new HabitListFragment();
     }
@@ -43,7 +41,9 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
 
         bindViews(view);
         resolveDependencies();
-        setUpRecyclerView();
+
+        habitRecyclerView.setAdapter(getViewCellAdapter());
+        habitRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
     }
@@ -56,32 +56,28 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
         controller = getHabitTrackerApplication().getHabitListController();
     }
 
-    private void setUpRecyclerView() {
+    private ViewCellAdapter getViewCellAdapter() {
         habitsSection = new HomogeneousSection<>(Habit.class, HabitViewCell.class);
 
-        EmptyViewCell emptyViewCell = new EmptyViewCell("Seems like you have no habits being tracked");
-        EmptySectionDecorator habitsSectionWithEmptyView = new EmptySectionDecorator(habitsSection, emptyViewCell);
-
-        viewCellAdapter = new ViewCellAdapter();
-        viewCellAdapter.setHasStableIds(true);
-        viewCellAdapter.add(habitsSectionWithEmptyView);
-
-        viewCellAdapter.addListener(new HabitViewCell.OnHabitClickedListener() {
-            @Override
-            public void onHabitClicked(Habit habit, int position) {
-                navigateToDetails(habit.getId());
-            }
-        });
-
-        viewCellAdapter.addListener(new HabitViewCell.OnCompleteClickedListener() {
-            @Override
-            public void onComplete(Habit habit, int position) {
-                controller.markHabitAsCompleted(habit.getId());
-            }
-        });
-
-        habitRecyclerView.setAdapter(viewCellAdapter);
-        habitRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        return ViewCellAdapter.create()
+            .section(
+                SectionBuilder.wrap(habitsSection)
+                    .showIfEmpty(new EmptyViewCell("Seems like you have no habits being tracked"))
+                    .build()
+            )
+            .listener(new HabitViewCell.OnHabitClickedListener() {
+                @Override
+                public void onHabitClicked(Habit habit, int position) {
+                    navigateToDetails(habit.getId());
+                }
+            })
+            .listener(new HabitViewCell.OnCompleteClickedListener() {
+                @Override
+                public void onComplete(Habit habit, int position) {
+                    controller.markHabitAsCompleted(habit.getId());
+                }
+            })
+            .build();
     }
 
     private void navigateToDetails(String habitID) {
@@ -106,6 +102,5 @@ public class HabitListFragment extends BaseFragment implements IHabitListView {
     @Override
     public void displayHabits(List<Habit> habits) {
         habitsSection.setAll(habits);
-        viewCellAdapter.notifyDataSetChanged();
     }
 }
